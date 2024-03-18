@@ -1,0 +1,69 @@
+import { CardBody, CardContainer, CardItem } from "../3d-card";
+import Image from "next/image";
+import Link from "next/link";
+import { Github } from "../../../../public/icon/LineMdGithubLoop";
+import { Button } from "@/components/ui/button";
+import AnimatedIcon from "@/components/shared/animated-icon";
+import LinkIcon from "../../../../public/icon/link-arrow.json";
+import LinkIconDark from "../../../../public/icon/link-arrow-dark.json";
+import { projects } from "@/constants";
+
+const Project = () => {
+  return (
+    <section className="~mt-10/20 text-center w-full">
+      <h3 className="heading">PROJECT</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {projects.map((item, i) => (
+          <CardContainer key={i} className="inter-var w-full max-w-full ">
+            <CardBody className=" relative group/card  transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background  border-black/15 dark:border-border rounded-xl ~p-1/3 border  ">
+              <CardItem translateZ="100" className="w-full ~mt-2/4">
+                <Image
+                  src={item.image}
+                  height="500"
+                  width="500"
+                  // placeholder="blur"
+                  className="aspect-video object-cover rounded-xl group-hover/card:shadow-xl w-full"
+                  alt="thumbnail"
+                />
+              </CardItem>
+              <div className="flex justify-between items-center ~mt-5/10">
+                <CardItem
+                  translateZ={20}
+                  as={Link}
+                  href={item.demoLink}
+                  target="__blank"
+                  className="~px-2/4 ~py-1/2 rounded-xl ~text-sm/base font-semibold border border-transparent hover:border-border text-foreground flex items-center gap-2 transition-none"
+                >
+                  Live Demo
+                  <AnimatedIcon
+                    animationData={LinkIcon}
+                    loop={true}
+                    className="size-4 dark:hidden"
+                  />
+                  <AnimatedIcon
+                    animationData={LinkIconDark}
+                    loop={true}
+                    className="size-4 hidden dark:block"
+                  />
+                </CardItem>
+                <CardItem translateZ={20}>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="rounded-full size-12 p-0 bg-transparent"
+                  >
+                    <Link href={item.githubLink} target="_blank">
+                      <Github className="size-8 " />
+                    </Link>
+                  </Button>
+                </CardItem>
+              </div>
+            </CardBody>
+          </CardContainer>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default Project;
