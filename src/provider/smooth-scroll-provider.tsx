@@ -2,13 +2,13 @@
 import { useEffect } from "react";
 
 const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
-  // useEffect(() => {
-  //   (async () => {
-  //     const LocomotiveScroll = (await import("locomotive-scroll")).default;
+  useEffect(() => {
+    (async () => {
+      const LocomotiveScroll = (await import("locomotive-scroll")).default;
 
-  //     const locomotiveScroll = new LocomotiveScroll();
-  //   })();
-  // }, []);
+      const locomotiveScroll = new LocomotiveScroll();
+    })();
+  }, []);
   return <>{children}</>;
 };
 
