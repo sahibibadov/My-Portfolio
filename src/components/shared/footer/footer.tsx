@@ -11,7 +11,7 @@ import AnimatedIcon from "../animated-icon";
 
 const Footer = () => {
   return (
-    <footer className="border ~mt-8/12">
+    <footer className="border-t ~mt-8/12">
       <Container className="flex flex-col md:flex-row items-center md:justify-between gap-1 ~p-3/6 backdrop-blur">
         <p className="~text-sm/base  tracking-normal">
           Copyright © 2024. Made with by Sahib Ibadov

@@ -8,6 +8,7 @@ import Navabr from "@/components/shared/navbar/navbar";
 import Footer from "@/components/shared/footer/footer";
 import { BackgroundParticle } from "@/components/shared/particle/bg-particle";
 import ScrollToTop from "@/components/shared/scroll-to-top";
+import SmoothScroll from "@/provider/smooth-scroll-provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,13 +33,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn("min-h-dvh  font-sans antialiased flex flex-col", fontSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <BackgroundParticle />
-          <Header>
-            <Navabr />
-          </Header>
-          {children}
-          <Footer />
-          <ScrollToTop />
+          <SmoothScroll>
+            <BackgroundParticle />
+            <Header>
+              <Navabr />
+            </Header>
+            {children}
+            <Footer />
+            <ScrollToTop />
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

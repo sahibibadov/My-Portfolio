@@ -11,7 +11,7 @@ const Resume = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
         {/* education */}
         <div className="~space-y-4/6">
-          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-1">
+          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-1 justify-center md:justify-start">
             <AnimatedIcon animationData={Educat} loop={true} className="size-8 " />
             Education
           </h4>
@@ -45,7 +45,7 @@ const Resume = () => {
 
         {/* experience */}
         <div className="~space-y-4/6">
-          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-1">
+          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-1 justify-center md:justify-start">
             <AnimatedIcon animationData={Exper} loop={true} className="size-8" /> Experience
           </h4>
 
