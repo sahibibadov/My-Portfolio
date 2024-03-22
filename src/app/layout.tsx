@@ -9,7 +9,8 @@ import Footer from "@/components/shared/footer/footer";
 import { BackgroundParticle } from "@/components/shared/particle/bg-particle";
 import ScrollToTop from "@/components/shared/scroll-to-top";
 import SmoothScroll from "@/provider/smooth-scroll-provider";
-
+import FlareCursor from "@/components/shared/flare-cursor";
+import { Toaster } from "@/components/ui/sonner";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -35,6 +36,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <SmoothScroll>
             <BackgroundParticle />
+            <FlareCursor />
+            <Toaster position="top-right" richColors />
             <Header>
               <Navabr />
             </Header>

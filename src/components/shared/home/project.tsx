@@ -15,8 +15,11 @@ const Project = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {projects.map((item, i) => (
           <CardContainer key={i} className="inter-var w-full max-w-full ">
-            <CardBody className=" relative group/card  transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background  border-black/15 dark:border-border rounded-xl ~p-1/3 border  ">
-              <CardItem translateZ="100" className="w-full ~mt-2/4">
+            <CardBody className=" relative group/card transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background border-black/15 dark:border-border rounded-xl ~p-1/3 border">
+              <CardItem>
+                <h4 className="~text-base/xl font-semibold text-foreground/45">{item.name}</h4>
+              </CardItem>
+              <CardItem translateZ="100" className="w-full ~mt-2/3">
                 <Image
                   src={item.image}
                   height="500"
@@ -26,13 +29,13 @@ const Project = () => {
                   alt="thumbnail"
                 />
               </CardItem>
-              <div className="flex justify-between items-center ~mt-5/10">
+              <div className="flex justify-between items-center ~mt-2/3">
                 <CardItem
                   translateZ={20}
                   as={Link}
                   href={item.demoLink}
                   target="__blank"
-                  className="~px-2/4 ~py-1/2 rounded-xl ~text-sm/base font-semibold border border-transparent hover:border-border text-foreground flex items-center gap-2 transition-none"
+                  className="~px-2/4 ~py-1/2 rounded-xl ~text-sm/base font-semibold border border-transparent hover:border-border text-foreground/45 flex items-center gap-2 transition-none "
                 >
                   Live Demo
                   <AnimatedIcon

@@ -4,6 +4,7 @@ import NavLink from "./nav-links";
 import Container from "@/components/shared/container";
 import Logo from "../../../../public/logo.json";
 import Dark from "../../../../public/logo-dark.json";
+import MobileNavbar from "./mobile/mobile-nav";
 
 const Navbar = () => {
   return (
@@ -24,6 +25,7 @@ const Navbar = () => {
           <NavLink />
         </nav>
         <ThemeToggle />
+        <MobileNavbar />
       </div>
     </Container>
   );

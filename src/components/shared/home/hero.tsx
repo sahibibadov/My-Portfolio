@@ -1,4 +1,4 @@
-import { SparklesPreview } from "@/components/shared/sparkles-preview";
+import { SparklesPreview } from "@/components/shared/heading";
 import Typeanimationtext from "@/components/shared/type-animation-text";
 import { Button } from "@/components/ui/button";
 const Hero = () => {

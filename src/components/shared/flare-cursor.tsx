@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
 
 const FlareCursor = () => {
@@ -27,9 +28,13 @@ const FlareCursor = () => {
 
   return (
     <div
-      className={`flare ${
-        isPointer ? "pointer" : ""
-      } border-2 border-black dark:border-border bg-foreground/40 dark:bg-background/40`}
+      className={cn(
+        "fixed border-2 z-[100] border-black/45 dark:border-border rounded-full mix-blend-normal pointer-events-none -translate-x-1/2 -translate-y-1/2 backdrop-filter backdrop-blur-[1px] [transition:width_0.2s_ease-in-out,_height_0.2s_ease-in-out]",
+        {
+          "hidden !opacity-0 [transition:width_0.2s_ease-in-out,_height_0.2s_ease-in-out,_opacity_0.2s_ease-in-out]":
+            isPointer,
+        }
+      )}
       style={{
         ...cursorStyle,
         left: `${position.x}px`,

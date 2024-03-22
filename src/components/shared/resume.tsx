@@ -8,7 +8,7 @@ const Resume = () => {
     <section className="~mt-10/20 w-full">
       <h3 className="heading">RESUME</h3>
       {/* wrapper */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 ~gap-4/10 ">
         {/* education */}
         <div className="~space-y-4/6">
           <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-1 justify-center md:justify-start">

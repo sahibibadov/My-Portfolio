@@ -27,7 +27,7 @@ const ScrollToTop = () => {
       size="icon"
       onClick={scrollToTop}
       className={cn(
-        "fixed ~right-5/20 z-50 rounded-full  ~size-8/12 ~bottom-5/10  transition-all shadow-sm border-black/25 dark:border-border"
+        "fixed ~right-5/14 z-50 rounded-full  ~size-8/12 ~bottom-5/10  transition-all shadow-sm border-black/25 dark:border-border"
       )}
       aria-label="Scroll to top"
       initial={{ scale: 0, opacity: 0 }}

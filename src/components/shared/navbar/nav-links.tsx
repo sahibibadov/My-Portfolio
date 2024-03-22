@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const NavLink = () => {
+const MobileNavLink = () => {
   const path = usePathname();
 
   return (
@@ -15,7 +15,7 @@ const NavLink = () => {
           href={link.path}
           key={i}
           className={cn(
-            "relative  font-semibold text-foreground/65 hover:text-foreground transition-all",
+            "relative group  font-semibold text-foreground/65 hover:text-foreground transition-all",
             {
               "text-foreground": path === link.path,
             }
@@ -27,7 +27,7 @@ const NavLink = () => {
           {path === link.path && (
             <motion.span
               layoutId="mix-underline"
-              className="absolute -inset-x-2 rounded-md -inset-y-1 border-2 border-dashed border-border   "
+              className="absolute -inset-x-2 rounded-md  -inset-y-1 border-2 border-dashed border-border"
               transition={{ type: "spring", duration: 0.5 }}
             />
           )}
@@ -37,4 +37,4 @@ const NavLink = () => {
   );
 };
 
-export default NavLink;
+export default MobileNavLink;

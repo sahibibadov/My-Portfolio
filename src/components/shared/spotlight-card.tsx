@@ -11,7 +11,7 @@ export function SpotLightItem({ children }: { children: React.ReactNode }) {
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative overflow-hidden border grid place-items-center backdrop-blur-sm bg-transparent"
+      className="relative overflow-hidden border w-full aspect-square grid place-items-center backdrop-blur-sm bg-transparent"
     >
       <AnimatePresence>
         {isHovered && (
@@ -49,7 +49,7 @@ export function SpotLightItem({ children }: { children: React.ReactNode }) {
           },90%,70%,0.35) 0%,transparent 10%,transparent) fixed`,
         }}
       ></motion.div>
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 w-full h-full">{children}</div>
     </div>
   );
 }
