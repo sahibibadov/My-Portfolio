@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Sahib ibadov Portfolio
 
-## Getting Started
+## Demo
 
-First, run the development server:
+live demo: ## Technologies Used https:https://sahibibadov.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+##  Technologies Used
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ - [Next Js 14](https://nextjs.org/)
+ - Typescript
+ - shadcn/ui
+ - Tailwindcss
+ - Tailwind-merge
+ - fluid-tailwind
+ - Clsx
+ - [Framer Motion](https://www.framer.com/motion/)
+ - three
+ - @react-three/drei
+ - @react-three/fiber
+ - locomotive-scroll V5
+ - lottie-react
+ - resend
+ - zod
+ 
+  ## Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Sahib-Portfolio is deployed on Vercel, a popular platform for hosting web applications.
+## Screenshots
+# Dark mode
+![home-dark](https://github.com/sahibibadov/Nextjs14-blog-website/assets/117587344/0422f93e-4198-4b7a-b2b0-1831e9470638)
+![about-dark](https://github.com/sahibibadov/Nextjs14-blog-website/assets/117587344/064df723-36f3-4e52-8c5c-3efce3f78003)
+![contact-dark](https://github.com/sahibibadov/Nextjs14-blog-website/assets/117587344/b73a3a6a-5c0a-4bf9-b298-f0073c25b6f7)
+# Light mode
+![home](https://github.com/sahibibadov/Nextjs14-blog-website/assets/117587344/09552c69-b6f2-4bd8-b59a-ff18a34fd45f)
+![about](https://github.com/sahibibadov/Nextjs14-blog-website/assets/117587344/cd80b6ee-2351-4b5a-b0e9-1a47e5d13b05)
+![contact](https://github.com/sahibibadov/Nextjs14-blog-website/assets/117587344/bd725f0b-5428-4dd8-bf32-dfa7d84f12bd)
