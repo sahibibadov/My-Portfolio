@@ -1,5 +1,7 @@
+"use client";
+import { zoomIn } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-
+import { motion } from "framer-motion";
 export function SparklesPreview({
   children,
   className,
@@ -8,7 +10,14 @@ export function SparklesPreview({
   className?: string;
 }) {
   return (
-    <div className=" w-full   flex flex-col items-center justify-center overflow-hidden rounded-md ~mb-3/4">
+    <motion.div
+      variants={zoomIn(0.5, 0.6)}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 1, type: "spring" }}
+      className=" w-full   flex flex-col items-center justify-center overflow-hidden rounded-md ~mb-3/4"
+    >
       <h1
         className={cn(
           "mb-2 tracking-tight   font-bold  text-center text-transparent bg-clip-text bg-gradient-to-b from-neutral-900 to-neutral-600 relative z-20 uppercase",
@@ -27,6 +36,6 @@ export function SparklesPreview({
         {/* Radial Gradient to prevent sharp edges */}
         <div className="absolute inset-0 w-full h-full bg-background [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
       </div>
-    </div>
+    </motion.div>
   );
 }

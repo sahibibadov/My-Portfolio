@@ -2,15 +2,22 @@ import { education, experience } from "@/constants";
 import Educat from "../../../public/icon/educat.json";
 import Exper from "../../../public/icon/exper.json";
 import AnimatedIcon from "./animated-icon";
+import MotionSection, { MotionDivFade } from "./motion-element";
 
 const Resume = () => {
   return (
-    <section className="~mt-10/20 w-full">
+    <MotionSection className="~mt-10/32 w-full">
       <h3 className="heading">RESUME</h3>
       {/* wrapper */}
       <div className="grid grid-cols-1 md:grid-cols-2 ~gap-4/10 ">
         {/* education */}
-        <div className="~space-y-4/6">
+        <MotionDivFade
+          delay={0.6}
+          direction="right"
+          duration={1}
+          type="spring"
+          className="~space-y-4/6"
+        >
           <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-1 justify-center md:justify-start">
             <AnimatedIcon animationData={Educat} loop={true} className="size-8 " />
             Education
@@ -41,10 +48,16 @@ const Resume = () => {
               </div>
             ))}
           </div>
-        </div>
+        </MotionDivFade>
 
         {/* experience */}
-        <div className="~space-y-4/6">
+        <MotionDivFade
+          delay={0.6}
+          direction="left"
+          duration={1}
+          type="spring"
+          className="~space-y-4/6"
+        >
           <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-1 justify-center md:justify-start">
             <AnimatedIcon animationData={Exper} loop={true} className="size-8" /> Experience
           </h4>
@@ -73,9 +86,9 @@ const Resume = () => {
               </div>
             ))}
           </div>
-        </div>
+        </MotionDivFade>
       </div>
-    </section>
+    </MotionSection>
   );
 };
 

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import React, { createContext, useState, useContext, useRef, useEffect } from "react";
-
+import { motion } from "framer-motion";
 const MouseEnterContext = createContext<
   [boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined
 >(undefined);
@@ -11,10 +11,12 @@ export const CardContainer = ({
   children,
   className,
   containerClassName,
+  i = 0,
 }: {
   children?: React.ReactNode;
   className?: string;
   containerClassName?: string;
+  i?: number;
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
@@ -39,7 +41,11 @@ export const CardContainer = ({
   };
   return (
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.4 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3, delay: 0.2 * (i + 1) }}
+        viewport={{ once: true }}
         className={cn(
           "~py-1/2 lg:max-w-[400px] aspect-video flex items-center justify-center transition-all ",
           containerClassName
@@ -63,7 +69,7 @@ export const CardContainer = ({
         >
           {children}
         </div>
-      </div>
+      </motion.div>
     </MouseEnterContext.Provider>
   );
 };

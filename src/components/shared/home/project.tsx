@@ -7,14 +7,15 @@ import AnimatedIcon from "@/components/shared/animated-icon";
 import LinkIcon from "../../../../public/icon/link-arrow.json";
 import LinkIconDark from "../../../../public/icon/link-arrow-dark.json";
 import { projects } from "@/constants";
+import MotionSection from "../motion-element";
 
 const Project = () => {
   return (
-    <section className="~mt-10/20 text-center w-full">
+    <MotionSection className="~mt-10/20 text-center w-full">
       <h3 className="heading">PROJECT</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {projects.map((item, i) => (
-          <CardContainer key={i} className="inter-var w-full max-w-full ">
+          <CardContainer i={i + 1} key={i} className="inter-var w-full max-w-full ">
             <CardBody className=" relative group/card transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background border-black/15 dark:border-border rounded-xl ~p-1/3 border">
               <CardItem>
                 <h4 className="~text-base/xl font-semibold text-foreground/45">{item.name}</h4>
@@ -65,7 +66,7 @@ const Project = () => {
           </CardContainer>
         ))}
       </div>
-    </section>
+    </MotionSection>
   );
 };
 

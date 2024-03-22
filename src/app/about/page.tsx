@@ -1,4 +1,5 @@
 import { SparklesPreview } from "@/components/shared/heading";
+import MotionSection from "@/components/shared/motion-element";
 import Resume from "@/components/shared/resume";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -8,7 +9,13 @@ export const metadata: Metadata = {
 };
 const About = () => {
   return (
-    <section className="~mt-10/20  w-full">
+    <MotionSection
+      delay={0.5}
+      direction="up"
+      duration={0.6}
+      type="tween"
+      className="~mt-10/20  w-full"
+    >
       <SparklesPreview className="text-5xl md:text-6xl lg:text-7xl ">ABOUT</SparklesPreview>
 
       {/* about content */}
@@ -41,7 +48,7 @@ const About = () => {
           width={500}
           height={500}
           priority
-          className=" object-contain aspect-square w-64 h-64 rounded-md "
+          className=" object-contain aspect-square w-64 h-64 rounded-md flex-1"
         />
 
         {/* content */}
@@ -103,8 +110,8 @@ const About = () => {
       </div>
 
       {/* resume */}
-      <Resume />
-    </section>
+      <Resume key={Math.random()} />
+    </MotionSection>
   );
 };
 

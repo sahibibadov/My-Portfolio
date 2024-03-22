@@ -4,11 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { useState } from "react";
 
-export function SpotLightItem({ children }: { children: React.ReactNode }) {
+export function SpotLightItem({ children, i }: { children: React.ReactNode; i: number }) {
   const mousePosition = useMousePosition();
   const [isHovered, setIsHovered] = useState(false);
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.4 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.2 * (i + 1) }}
+      viewport={{ once: true }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="relative overflow-hidden border w-full aspect-square grid place-items-center backdrop-blur-sm bg-transparent"
@@ -50,6 +54,6 @@ export function SpotLightItem({ children }: { children: React.ReactNode }) {
         }}
       ></motion.div>
       <div className="relative z-10 w-full h-full">{children}</div>
-    </div>
+    </motion.div>
   );
 }
