@@ -262,6 +262,12 @@ export const skills = [
 
 export const projects = [
   {
+    name: "My Portfolio",
+    image: "/images/portfolio-image.png",
+    demoLink: "https://sahibibadov.vercel.app/",
+    githubLink: "https://github.com/sahibibadov/My-Portfolio",
+  },
+  {
     name: "Nextjs Blog Website",
     image: "/images/next-blog.png",
     demoLink: "https://nextjs14-blog-website.vercel.app",
@@ -292,9 +298,21 @@ export const projects = [
     githubLink: "https://github.com/sahibibadov/Nextjs14-Todo-app",
   },
   {
+    name: "Shopping Vegetable Website",
+    image: "/images/shopping-vegetable.png",
+    demoLink: "https://shopping-website-livid.vercel.app/",
+    githubLink: "https://github.com/sahibibadov/shopping-website",
+  },
+  {
     name: "Shopping App",
     image: "/images/shopping.png",
     demoLink: "https://shopping-pi-three.vercel.app/",
     githubLink: "https://github.com/sahibibadov/shopping",
+  },
+  {
+    name: "Infiniti-loop-website",
+    image: "/images/infiniti-loop.png",
+    demoLink: "https://infiniti-lopp-website.vercel.app/",
+    githubLink: "https://github.com/sahibibadov/infiniti-lopp-website",
   },
 ];
