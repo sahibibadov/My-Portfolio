@@ -260,59 +260,59 @@ export const skills = [
   },
 ];
 
-export const projects = [
-  {
-    name: "My Portfolio",
-    image: "/images/portfolio-image.png",
-    demoLink: "https://sahibibadov.vercel.app/",
-    githubLink: "https://github.com/sahibibadov/My-Portfolio",
-  },
-  {
-    name: "Nextjs Blog Website",
-    image: "/images/next-blog.png",
-    demoLink: "https://nextjs14-blog-website.vercel.app",
-    githubLink: "https://github.com/sahibibadov/Nextjs14-blog-website",
-  },
-  {
-    name: "Nextjs Admin Dashboard",
-    image: "/images/admindashboard.png",
-    demoLink: "https://nextjs14-admin-dashboard.vercel.app/dashboard",
-    githubLink: "https://github.com/sahibibadov/Nextjs14-admin-dashboard",
-  },
-  {
-    name: "Ay Yemek",
-    image: "/images/ayyemek.png",
-    demoLink: "https://ayyemek.vercel.app",
-    githubLink: "https://github.com/sahibibadov/Ay-yemek",
-  },
-  {
-    name: "Science Baku",
-    image: "/images/bilimbaku.png",
-    demoLink: "https://bilim-baku.vercel.app",
-    githubLink: "https://github.com/sahibibadov/bilim-baku",
-  },
-  {
-    name: "Nextjs Todo App",
-    image: "/images/todo-app.png",
-    demoLink: "https://nextjs14-todo-app-gamma.vercel.app",
-    githubLink: "https://github.com/sahibibadov/Nextjs14-Todo-app",
-  },
-  {
-    name: "Shopping Vegetable Website",
-    image: "/images/shopping-vegetable.png",
-    demoLink: "https://shopping-website-livid.vercel.app/",
-    githubLink: "https://github.com/sahibibadov/shopping-website",
-  },
-  {
-    name: "Shopping App",
-    image: "/images/shopping.png",
-    demoLink: "https://shopping-pi-three.vercel.app/",
-    githubLink: "https://github.com/sahibibadov/shopping",
-  },
-  {
-    name: "Infiniti-loop-website",
-    image: "/images/infiniti-loop.png",
-    demoLink: "https://infiniti-lopp-website.vercel.app/",
-    githubLink: "https://github.com/sahibibadov/infiniti-lopp-website",
-  },
-];
+// export const projects = [
+//   {
+//     name: "My Portfolio",
+//     image: "/images/portfolio-image.png",
+//     demoLink: "https://sahibibadov.vercel.app/",
+//     githubLink: "https://github.com/sahibibadov/My-Portfolio",
+//   },
+//   {
+//     name: "Nextjs Blog Website",
+//     image: "/images/next-blog.png",
+//     demoLink: "https://nextjs14-blog-website.vercel.app",
+//     githubLink: "https://github.com/sahibibadov/Nextjs14-blog-website",
+//   },
+//   {
+//     name: "Nextjs Admin Dashboard",
+//     image: "/images/admindashboard.png",
+//     demoLink: "https://nextjs14-admin-dashboard.vercel.app/dashboard",
+//     githubLink: "https://github.com/sahibibadov/Nextjs14-admin-dashboard",
+//   },
+//   {
+//     name: "Ay Yemek",
+//     image: "/images/ayyemek.png",
+//     demoLink: "https://ayyemek.vercel.app",
+//     githubLink: "https://github.com/sahibibadov/Ay-yemek",
+//   },
+//   {
+//     name: "Science Baku",
+//     image: "/images/bilimbaku.png",
+//     demoLink: "https://bilim-baku.vercel.app",
+//     githubLink: "https://github.com/sahibibadov/bilim-baku",
+//   },
+//   {
+//     name: "Nextjs Todo App",
+//     image: "/images/todo-app.png",
+//     demoLink: "https://nextjs14-todo-app-gamma.vercel.app",
+//     githubLink: "https://github.com/sahibibadov/Nextjs14-Todo-app",
+//   },
+//   {
+//     name: "Shopping Vegetable Website",
+//     image: "/images/shopping-vegetable.png",
+//     demoLink: "https://shopping-website-livid.vercel.app/",
+//     githubLink: "https://github.com/sahibibadov/shopping-website",
+//   },
+//   {
+//     name: "Shopping App",
+//     image: "/images/shopping.png",
+//     demoLink: "https://shopping-pi-three.vercel.app/",
+//     githubLink: "https://github.com/sahibibadov/shopping",
+//   },
+//   {
+//     name: "Infiniti-loop-website",
+//     image: "/images/infiniti-loop.png",
+//     demoLink: "https://infiniti-lopp-website.vercel.app/",
+//     githubLink: "https://github.com/sahibibadov/infiniti-lopp-website",
+//   },
+// ];
