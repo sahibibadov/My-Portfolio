@@ -64,7 +64,7 @@ export const education = [
     title: "University",
     uni: "Azerbaijan State Oil and Industry University",
     specialty: "oil and gas installations engineering",
-    year: "sep 2015 - jul 2019",
+    year: "Sep 2015 - Jul 2019",
     icon: Calendar,
     pulsa: (
       <span className="relative flex h-3 w-3 scale-125">
@@ -77,7 +77,7 @@ export const education = [
     title: "Master",
     uni: "Azerbaijan State Oil and Industry University",
     specialty: "oil and gas installations engineering",
-    year: "sep 2019 - jul 2021",
+    year: "Sep 2019 - Jul 2021",
     icon: Calendar,
     pulsa: (
       <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>
@@ -87,7 +87,17 @@ export const education = [
     title: "Frontend Programming",
     uni: " ATL Academy",
     specialty: "Frontend development (reactjs | nextjs)",
-    year: "okt 2022 - jul 2023",
+    year: "Okt 2022 - Jul 2023",
+    icon: Calendar,
+    pulsa: (
+      <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>
+    ),
+  },
+  {
+    title: "Backend Programming",
+    uni: " Web Coder (Adas)",
+    specialty: "PHP ( LARAVEL 11 )",
+    year: "March 2024 - August 2024",
     icon: Calendar,
     pulsa: (
       <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>
@@ -96,10 +106,9 @@ export const education = [
 ];
 export const experience = [
   {
-    title: "Meetsoft Company",
-
-    specialty: "Frontend Developer Intern ",
-    year: "aug 2023 - oct 2023",
+    title: "Atl Academy",
+    specialty: "Frontend developer mentor",
+    year: "may 2024 - present",
     icon: Calendar,
     pulsa: (
       <span className="relative flex h-3 w-3 scale-125">
@@ -110,7 +119,6 @@ export const experience = [
   },
   {
     title: "Tech-It Company",
-
     specialty: "Web Developer Intern",
     year: "nov 2023 - dec 2023",
     icon: Calendar,
@@ -119,10 +127,9 @@ export const experience = [
     ),
   },
   {
-    title: "WebCoder Company",
-
-    specialty: "Frontend developer Intern",
-    year: "mar 2024 - present",
+    title: "Meetsoft Company",
+    specialty: "Frontend Developer Intern ",
+    year: "aug 2023 - oct 2023",
     icon: Calendar,
     pulsa: (
       <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>
