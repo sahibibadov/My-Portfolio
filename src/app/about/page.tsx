@@ -110,7 +110,7 @@ const About = () => {
       </div>
 
       {/* resume */}
-      <Resume key={Math.random()} />
+      <Resume />
     </MotionSection>
   );
 };
