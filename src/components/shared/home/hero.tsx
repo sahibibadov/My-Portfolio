@@ -19,7 +19,7 @@ const Hero = () => {
         also unleash your business&apos;s full potential.
       </p>
       <Button variant="custom" asChild>
-        <a download href="/sahib-cv.pdf">
+        <a download href="/Sahib-fullstack.pdf">
           Download CV
         </a>
       </Button>
