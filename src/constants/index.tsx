@@ -79,9 +79,7 @@ export const education = [
     specialty: "oil and gas installations engineering",
     year: "Sep 2019 - Jul 2021",
     icon: Calendar,
-    pulsa: (
-      <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>
-    ),
+    pulsa: <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>,
   },
   {
     title: "Frontend Programming",
@@ -89,9 +87,7 @@ export const education = [
     specialty: "Frontend development (reactjs | nextjs)",
     year: "Okt 2022 - Jul 2023",
     icon: Calendar,
-    pulsa: (
-      <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>
-    ),
+    pulsa: <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>,
   },
   {
     title: "Backend Programming",
@@ -99,16 +95,14 @@ export const education = [
     specialty: "PHP ( LARAVEL 11 )",
     year: "March 2024 - August 2024",
     icon: Calendar,
-    pulsa: (
-      <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>
-    ),
+    pulsa: <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>,
   },
 ];
 export const experience = [
   {
-    title: "Atl Academy",
-    specialty: "Frontend developer mentor",
-    year: "may 2024 - present",
+    title: "Bank Respublica",
+    specialty: "Web Developer",
+    year: "aug 2024 - present",
     icon: Calendar,
     pulsa: (
       <span className="relative flex h-3 w-3 scale-125">
@@ -118,22 +112,32 @@ export const experience = [
     ),
   },
   {
+    title: "Atl Academy",
+    specialty: "Frontend developer mentor",
+    year: "may 2024 - aug 2024",
+    icon: Calendar,
+    pulsa: <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>,
+  },
+  {
+    title: "Web Coder",
+    specialty: "Web Developer intern",
+    year: "mar 2024 - aug 2024",
+    icon: Calendar,
+    pulsa: <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>,
+  },
+  {
     title: "Tech-It Company",
     specialty: "Web Developer Intern",
-    year: "nov 2023 - dec 2023",
+    year: "nov 2023 - feb 2024",
     icon: Calendar,
-    pulsa: (
-      <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>
-    ),
+    pulsa: <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>,
   },
   {
     title: "Meetsoft Company",
     specialty: "Frontend Developer Intern ",
-    year: "aug 2023 - oct 2023",
+    year: "jun 2023 - oct 2023",
     icon: Calendar,
-    pulsa: (
-      <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>
-    ),
+    pulsa: <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>,
   },
 ];
 

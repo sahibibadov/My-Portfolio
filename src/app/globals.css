@@ -60,7 +60,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground cursor-default md:cursor-none;
+    @apply bg-background text-foreground cursor-default  overflow-hidden;
   }
   ::-webkit-scrollbar {
     @apply w-2;

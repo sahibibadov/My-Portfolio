@@ -10,6 +10,8 @@ const Typeanimationtext = () => {
         2000, // Waits 1s
         "Nextjs", // Deletes 'One' and types 'Two'
         2000,
+        "Laravel", // Deletes 'One' and types 'Two'
+        2000,
 
         () => {},
       ]}
