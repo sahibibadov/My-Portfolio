@@ -1,5 +1,6 @@
 import { SparklesPreview } from "@/components/shared/heading";
 import MotionSection from "@/components/shared/motion-element";
+import FramerComponent from "@/components/shared/motion-element/framer-component";
 import Resume from "@/components/shared/resume";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -9,36 +10,43 @@ export const metadata: Metadata = {
 };
 const About = () => {
   return (
-    <MotionSection
-      delay={0.5}
-      direction="up"
-      duration={0.6}
-      type="tween"
-      className="~mt-10/20  w-full"
-    >
-      <SparklesPreview className="text-5xl md:text-6xl lg:text-7xl ">ABOUT</SparklesPreview>
+    <section className="~mt-10/20  w-full">
+      <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
+        <SparklesPreview className="text-5xl md:text-6xl lg:text-7xl ">ABOUT</SparklesPreview>
+      </FramerComponent>
 
       {/* about content */}
-      <div className="~space-y-2/4 ~mt-4/8   *:text-center md:text-start text-foreground/75 ~text-sm/base">
+      <FramerComponent
+        blur="10px"
+        delay={0.6}
+        duration={0.6}
+        direction="bottom"
+        distance={50}
+        className="~space-y-2/4 ~mt-4/8   *:text-center md:text-start text-foreground/75 ~text-sm/base"
+      >
         <p>
-          Hello there! I&apos;m Sahib Ibadov a passionate and result-oriented Frontend Developer
-          with a commitment to building user-centered, efficient and visually appealing web
-          applications. With more than 1 year of experience as a frontend developer, I thrive on
-          turning innovative ideas into seamless digital experiences.
+          Hello there! I&apos;m Sahib Ibadov a passionate and result-oriented Frontend Developer with a commitment to
+          building user-centered, efficient and visually appealing web applications. With more than 1 year of experience
+          as a frontend developer, I thrive on turning innovative ideas into seamless digital experiences.
         </p>
         <p>
-          My basic stack is React.js, Next.js and Tailwind. I&apos;m also familiar with the
-          TypeScript and Javascript programming language. I&apos;m always looking to learn new
-          technologies.
+          My basic stack is React.js, Next.js and Tailwind. I&apos;m also familiar with the TypeScript and Javascript
+          programming language. I&apos;m always looking to learn new technologies.
         </p>
         <p>
-          When I&apos;m not coding, I enjoy playing football, listening to music, play video games
-          and watch YouTube. I also enjoy listening to podcasts, read articles and stuff and watch
-          doumentaries about different things
+          When I&apos;m not coding, I enjoy playing football, listening to music, play video games and watch YouTube. I
+          also enjoy listening to podcasts, read articles and stuff and watch doumentaries about different things
         </p>
-      </div>
+      </FramerComponent>
       {/* image and content */}
-      <div className="flex  gap-4 items-center flex-col sm:flex-row">
+      <FramerComponent
+        blur="10px"
+        delay={0.8}
+        duration={0.6}
+        direction="bottom"
+        distance={50}
+        className="flex  gap-4 items-center flex-col sm:flex-row"
+      >
         {/* image */}
 
         <Image
@@ -107,11 +115,11 @@ const About = () => {
             </li>
           </div>
         </ul>
-      </div>
+      </FramerComponent>
 
       {/* resume */}
       <Resume />
-    </MotionSection>
+    </section>
   );
 };
 

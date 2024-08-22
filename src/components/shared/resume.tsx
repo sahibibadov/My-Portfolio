@@ -1,25 +1,21 @@
 import { education, experience } from "@/constants";
-import Educat from "../../../public/icon/educat.json";
-import Exper from "../../../public/icon/exper.json";
-import AnimatedIcon from "./animated-icon";
-import MotionSection, { MotionDivFade } from "./motion-element";
+import { EducationIcon } from "../../../public/icon-static/education";
+import { ExperienceIcon } from "../../../public/icon-static/experience";
+import { Calendar } from "../../../public/icon-static/calendar";
+import FramerComponent from "./motion-element/framer-component";
 
 const Resume = () => {
   return (
-    <MotionSection className="~mt-10/32 w-full">
-      <h3 className="heading">RESUME</h3>
+    <section className="~mt-10/32 w-full">
+      <FramerComponent blur="6px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
+        <h3 className="heading">RESUME</h3>
+      </FramerComponent>
       {/* wrapper */}
       <div className="grid grid-cols-1 md:grid-cols-2 ~gap-4/10 ">
         {/* education */}
-        <MotionDivFade
-          delay={0.6}
-          direction="right"
-          duration={1}
-          type="spring"
-          className="~space-y-4/6"
-        >
-          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-1 justify-center md:justify-start">
-            <AnimatedIcon animationData={Educat} loop={true} className="size-8 " />
+        <FramerComponent delay={0.6} blur="6px" direction="left" distance={300} duration={0.7} className="~space-y-4/6">
+          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
+            <EducationIcon className="size-8" />
             Education
           </h4>
 
@@ -31,16 +27,14 @@ const Resume = () => {
               >
                 {item.pulsa}
                 <div className="relative -translate-y-2 flex-1 space-y-2">
-                  <h4 className="~text-base/xl font-semibold text-neutral-600 dark:text-neutral-300">
-                    {item.title}
-                  </h4>
+                  <h4 className="~text-base/xl font-semibold text-neutral-600 dark:text-neutral-300">{item.title}</h4>
                   <div className="flex justify-between gap-2 text-neutral-500 pb-3 border-b">
                     <div className="space-y-1">
                       <p className="~text-sm/base">{item.uni}</p>
                       <p className="~text-xs/base">{item.specialty}</p>
                     </div>
                     <div className="whitespace-nowrap ~text-xs/base flex items-center gap-2">
-                      <AnimatedIcon animationData={item.icon} loop={true} className="size-4" />
+                      <Calendar className="size-4" />
                       {item.year}
                     </div>
                   </div>
@@ -48,18 +42,19 @@ const Resume = () => {
               </div>
             ))}
           </div>
-        </MotionDivFade>
+        </FramerComponent>
 
         {/* experience */}
-        <MotionDivFade
+        <FramerComponent
           delay={0.6}
-          direction="left"
-          duration={1}
-          type="spring"
+          blur="6px"
+          direction="right"
+          distance={300}
+          duration={0.7}
           className="~space-y-4/6"
         >
-          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-1 justify-center md:justify-start">
-            <AnimatedIcon animationData={Exper} loop={true} className="size-8" /> Experience
+          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
+            <ExperienceIcon className="size-8" /> Experience
           </h4>
 
           <div className="flex flex-col justify-between  relative flex-1 ">
@@ -70,15 +65,13 @@ const Resume = () => {
               >
                 {item.pulsa}
                 <div className="relative -translate-y-2 flex-1 space-y-2">
-                  <h4 className="~text-base/xl font-semibold text-neutral-600 dark:text-neutral-300">
-                    {item.title}
-                  </h4>
+                  <h4 className="~text-base/xl font-semibold text-neutral-600 dark:text-neutral-300">{item.title}</h4>
                   <div className="flex justify-between gap-2 text-neutral-500 pb-3 border-b">
                     <div>
                       <p className="~text-sm/base">{item.specialty}</p>
                     </div>
                     <div className="whitespace-nowrap ~text-xs/base flex items-center gap-2">
-                      <AnimatedIcon animationData={item.icon} loop={true} className="size-4" />
+                      <Calendar className="size-4" />
                       {item.year}
                     </div>
                   </div>
@@ -86,9 +79,9 @@ const Resume = () => {
               </div>
             ))}
           </div>
-        </MotionDivFade>
+        </FramerComponent>
       </div>
-    </MotionSection>
+    </section>
   );
 };
 

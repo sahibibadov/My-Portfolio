@@ -4,7 +4,6 @@ import {
   fluidCorePlugins,
   defaultThemeScreensInRems,
   defaultThemeFontSizeInRems,
-  fluidize,
   type FluidConfig,
 } from "fluid-tailwind";
 const { fontFamily } = require("tailwindcss/defaultTheme");
@@ -14,12 +13,7 @@ const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenCo
 const config = {
   darkMode: ["class"],
   content: {
-    files: [
-      "./pages/**/*.{ts,tsx}",
-      "./components/**/*.{ts,tsx}",
-      "./app/**/*.{ts,tsx}",
-      "./src/**/*.{ts,tsx}",
-    ],
+    files: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
     extract: fluidExtractor(),
   },
   prefix: "",
@@ -31,7 +25,8 @@ const config = {
     screens: defaultThemeScreensInRems,
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["var(--font-geist-sans)"],
+        mono: ["var(--font-geist-mono)"],
       },
       boxShadow: {
         input: `0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08)`,
@@ -97,9 +92,7 @@ const config = {
 
 function addVariablesForColors({ addBase, theme }: any) {
   let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  );
+  let newVars = Object.fromEntries(Object.entries(allColors).map(([key, val]) => [`--${key}`, val]));
 
   addBase({
     ":root": newVars,
