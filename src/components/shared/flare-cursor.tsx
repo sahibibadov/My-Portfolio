@@ -1,69 +1,85 @@
 "use client";
 
+import React, { useCallback, useState, memo } from "react";
+import { AnimatePresence, motion, useMotionValue, useSpring, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
-import React, { useState, useEffect } from "react";
 
-const FlareCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+interface CursorProps {}
 
-  const [isPointer, setIsPointer] = useState(false);
+const FramerCursor: React.FC<CursorProps> = () => {
+  const [isPointer, setIsPointer] = useState<boolean>(false);
+  const cursorX = useMotionValue<number>(-100);
+  const cursorY = useMotionValue<number>(-100);
 
-  const handleMouseMove = (e: any) => {
-    setPosition({ x: e.clientX, y: e.clientY });
+  const springConfig = { damping: 100, stiffness: 1000 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
 
-    const target = e.target;
+  const moveCursor = useCallback(
+    (e: MouseEvent) => {
+      cursorX.set(e.clientX - 16);
+      cursorY.set(e.clientY - 16);
 
-    setIsPointer(window.getComputedStyle(target).getPropertyValue("cursor") === "pointer");
+      // Check if the cursor is over specific elements
+      const elements = document.elementsFromPoint(e.clientX, e.clientY);
+      const isOverTargetElement = elements.some(
+        (element) =>
+          ["h1", "h2", "h3", "button", "a", "input", "label"].includes(element.tagName.toLowerCase()) ||
+          element.hasAttribute("data-cursor"),
+      );
+
+      setIsPointer(isOverTargetElement);
+    },
+    [cursorX, cursorY],
+  );
+
+  React.useEffect(() => {
+    window.addEventListener("mousemove", moveCursor, { passive: true });
+
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+    };
+  }, [moveCursor]);
+
+  const variants: Variants = {
+    normal: {
+      scale: 1,
+      transition: {
+        duration: 0.2,
+        ease: "easeOut",
+      },
+    },
+    pointer: {
+      scale: 0.5,
+      transition: {
+        duration: 0.2,
+        ease: "easeOut",
+      },
+    },
   };
 
-  useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const flareSize = isPointer ? 0 : 30;
-
-  const cursorStyle = isPointer ? { left: "-100px", top: "-100px" } : {};
-
   return (
-    <div
-      className={cn(
-        "hidden md:block fixed border-2 z-[100] border-black/45 dark:border-border rounded-full mix-blend-normal pointer-events-none -translate-x-1/2 -translate-y-1/2 backdrop-filter backdrop-blur-[1px] [transition:width_0.2s_ease-in-out,_height_0.2s_ease-in-out]",
-        {
-          "hidden !opacity-0 [transition:width_0.2s_ease-in-out,_height_0.2s_ease-in-out,_opacity_0.2s_ease-in-out]":
-            isPointer,
-        }
-      )}
-      style={{
-        ...cursorStyle,
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-        width: `${flareSize}px`,
-        height: `${flareSize}px`,
-      }}
-    ></div>
+    <AnimatePresence>
+      <motion.div
+        className="pointer-events-none fixed z-[10001] hidden md:block"
+        initial="normal"
+        animate={isPointer ? "pointer" : "normal"}
+        exit="normal"
+        transition={{ duration: 0.2 }}
+        variants={variants}
+        style={{
+          translateX: cursorXSpring,
+          translateY: cursorYSpring,
+        }}
+      >
+        <div
+          className={cn(
+            "mix-blend-mode-difference bg-blend-mode-difference size-9 rounded-full border border-white/30  backdrop-blur-sm ",
+          )}
+        />
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
-export default FlareCursor;
-
-/* .flare {
-  position: fixed;
-  border: 2px solid #ffffff2b;
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 99999999 !important;
-  backdrop-filter: blur(1px);
-  background-color: #0000005e;
-  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
-  cursor: none !important;
-}
-
-.flare.pointer {
-  display: none;
-  opacity: 0 !important;
-  transition: width 0.2s ease-in-out, height 0.2s ease-in-out, opacity 0.2s ease-in-out;
-} */
+export default memo(FramerCursor);

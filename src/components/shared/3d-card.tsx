@@ -2,10 +2,9 @@
 
 import { cn } from "@/lib/utils";
 import React, { createContext, useState, useContext, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
-const MouseEnterContext = createContext<
-  [boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined
->(undefined);
+const MouseEnterContext = createContext<[boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined>(
+  undefined,
+);
 
 export const CardContainer = ({
   children,
@@ -41,14 +40,10 @@ export const CardContainer = ({
   };
   return (
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.4 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3, delay: 0.2 * (i + 1) }}
-        viewport={{ once: true }}
+      <div
         className={cn(
           "~py-1/2 lg:max-w-[400px] aspect-video flex items-center justify-center transition-all ",
-          containerClassName
+          containerClassName,
         )}
         style={{
           perspective: "1000px",
@@ -59,35 +54,21 @@ export const CardContainer = ({
           onMouseEnter={handleMouseEnter}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className={cn(
-            "flex items-center justify-center relative transition-all duration-200 ease-linear",
-            className
-          )}
+          className={cn("flex items-center justify-center relative transition-all duration-200 ease-linear", className)}
           style={{
             transformStyle: "preserve-3d",
           }}
         >
           {children}
         </div>
-      </motion.div>
+      </div>
     </MouseEnterContext.Provider>
   );
 };
 
-export const CardBody = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
+export const CardBody = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   return (
-    <div
-      className={cn(
-        "w-full [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]",
-        className
-      )}
-    >
+    <div className={cn("w-full [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]", className)}>
       {children}
     </div>
   );

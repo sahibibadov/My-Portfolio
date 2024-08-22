@@ -4,8 +4,8 @@ import * as React from "react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
-import { Sun } from "../../../public/icon/sun";
-import { Moon } from "../../../public/icon/moon";
+import { Sun } from "../../../public/icon-static/sun";
+import { Moon } from "../../../public/icon-static/moon";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = React.useState(false);
