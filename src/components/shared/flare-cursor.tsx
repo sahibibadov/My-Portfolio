@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState,memo } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useMousePosition } from "@/hook/useMousePosition"; // Hook'u içe aktar
@@ -74,7 +74,7 @@ const FramerCursor: React.FC<CursorProps> = () => {
   );
 };
 
-export default FramerCursor;
+export default memo(FramerCursor);
 
 /*"use client";
 
