@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 interface CursorProps {}
 
-const FramerCursor: React.FC<CursorProps> = memo(() => {
+const FramerCursor: React.FC<CursorProps> = () => {
   const [isPointer] = useState<boolean>(false);
   const cursorX = useMotionValue<number>(-100);
   const cursorY = useMotionValue<number>(-100);
@@ -72,7 +72,7 @@ const FramerCursor: React.FC<CursorProps> = memo(() => {
       </motion.div>
     </AnimatePresence>
   );
-});
+};
 
 export default FramerCursor;
 
