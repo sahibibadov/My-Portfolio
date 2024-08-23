@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useCallback, useEffect, useState,memo } from "react";
+import { useEffect, useState, FC } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useMousePosition } from "@/hook/useMousePosition"; // Hook'u içe aktar
 
 interface CursorProps {}
 
-const FramerCursor: React.FC<CursorProps> = () => {
+const FramerCursor: FC<CursorProps> = () => {
   const [isPointer, setIsPointer] = useState<boolean>(false);
   const { x: mouseX, y: mouseY } = useMousePosition(); // Hook'u kullan
-  const cursorX = useMotionValue<number>(-100);
-  const cursorY = useMotionValue<number>(-100);
+  const cursorX = useMotionValue<number>(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
+  const cursorY = useMotionValue<number>(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
 
-  const springConfig = { damping: 100, stiffness: 1000 };
+  const springConfig = { damping: 200, stiffness: 3000 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -38,43 +38,41 @@ const FramerCursor: React.FC<CursorProps> = () => {
       scale: 1,
       transition: {
         duration: 0.2,
-        ease: "easeOut",
       },
     },
     pointer: {
       scale: 0.5,
       transition: {
         duration: 0.2,
-        ease: "easeOut",
       },
     },
   };
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className="pointer-events-none fixed z-[10001] hidden md:block"
-        initial="normal"
-        animate={isPointer ? "pointer" : "normal"}
-        exit="normal"
-        transition={{ duration: 0.2 }}
-        variants={variants}
-        style={{
-          translateX: cursorXSpring,
-          translateY: cursorYSpring,
-        }}
-      >
-        <div
+    <motion.div
+      className="pointer-events-none top-0 left-0 fixed z-[10001] hidden md:block"
+      style={{
+        translateX: cursorXSpring,
+        translateY: cursorYSpring,
+      }}
+    >
+      <AnimatePresence>
+        <motion.div
           className={cn(
-            "mix-blend-mode-difference bg-blend-mode-difference size-9 rounded-full border border-white/30 backdrop-blur-sm",
+            "mix-blend-mode-difference bg-blend-mode-difference size-9 rounded-full border border-foreground/30 backdrop-blur-sm",
           )}
+          initial="normal"
+          animate={isPointer ? "pointer" : "normal"}
+          exit="normal"
+          transition={{ duration: 0.2 }}
+          variants={variants}
         />
-      </motion.div>
-    </AnimatePresence>
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
-export default memo(FramerCursor);
+export default FramerCursor;
 
 /*"use client";
 
