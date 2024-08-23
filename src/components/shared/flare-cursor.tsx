@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useMousePosition } from "@/hooks/useMousePosition"; // Hook'u içe aktar
+import { useMousePosition } from "@/hook/useMousePosition"; // Hook'u içe aktar
 
 interface CursorProps {}
 
