@@ -1,40 +1,37 @@
 "use client";
 
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useMousePosition } from "@/hooks/useMousePosition"; // Hook'u içe aktar
 
 interface CursorProps {}
 
 const FramerCursor: React.FC<CursorProps> = () => {
   const [isPointer, setIsPointer] = useState<boolean>(false);
+  const { x: mouseX, y: mouseY } = useMousePosition(); // Hook'u kullan
   const cursorX = useMotionValue<number>(-100);
   const cursorY = useMotionValue<number>(-100);
 
-  const springConfig = { damping: 25, stiffness: 500 };
+  const springConfig = { damping: 100, stiffness: 1000 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  const moveCursor = useCallback((e: MouseEvent) => {
-    cursorX.set(e.clientX - 16);
-    cursorY.set(e.clientY - 16);
+  // Update cursor position based on mouse position
+  useEffect(() => {
+    cursorX.set(mouseX - 16);
+    cursorY.set(mouseY - 16);
 
-    const elements = document.elementsFromPoint(e.clientX, e.clientY);
+    // Check if the cursor is over specific elements
+    const elements = document.elementsFromPoint(mouseX, mouseY);
     const isOverTargetElement = elements.some(
       (element) =>
         ["h1", "h2", "h3", "button", "a", "input", "label"].includes(element.tagName.toLowerCase()) ||
-        element.hasAttribute("data-cursor")
+        element.hasAttribute("data-cursor"),
     );
 
     setIsPointer(isOverTargetElement);
-  }, [cursorX, cursorY]);
-
-  useEffect(() => {
-    window.addEventListener("mousemove", moveCursor);
-    return () => {
-      window.removeEventListener("mousemove", moveCursor);
-    };
-  }, [moveCursor]);
+  }, [mouseX, mouseY, cursorX, cursorY]);
 
   const variants: Variants = {
     normal: {
@@ -54,24 +51,26 @@ const FramerCursor: React.FC<CursorProps> = () => {
   };
 
   return (
-    <motion.div
-      className="pointer-events-none fixed z-[10001] hidden md:block"
-      initial="normal"
-      animate={isPointer ? "pointer" : "normal"}
-      exit="normal"
-      transition={{ duration: 0.2 }}
-      variants={variants}
-      style={{
-        translateX: cursorXSpring,
-        translateY: cursorYSpring,
-      }}
-    >
-      <div
-        className={cn(
-          "mix-blend-mode-difference bg-blend-mode-difference size-9 rounded-full border border-white/30 backdrop-blur-sm"
-        )}
-      />
-    </motion.div>
+    <AnimatePresence>
+      <motion.div
+        className="pointer-events-none fixed z-[10001] hidden md:block"
+        initial="normal"
+        animate={isPointer ? "pointer" : "normal"}
+        exit="normal"
+        transition={{ duration: 0.2 }}
+        variants={variants}
+        style={{
+          translateX: cursorXSpring,
+          translateY: cursorYSpring,
+        }}
+      >
+        <div
+          className={cn(
+            "mix-blend-mode-difference bg-blend-mode-difference size-9 rounded-full border border-white/30 backdrop-blur-sm",
+          )}
+        />
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
