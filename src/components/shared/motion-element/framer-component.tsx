@@ -52,10 +52,13 @@ export default function FramerComponent({
       opacity: 1,
       filter: "blur(0px)",
       transition: {
-        type: "tween",
+        type: "spring",
         duration,
         delay,
-        ease: "easeIn",
+        damping: 10,
+        amping: 10,
+        stiffness: 100,
+        mass: 1,
       },
     },
   };

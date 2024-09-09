@@ -11,7 +11,15 @@ const Skills = () => {
 
       <HighlightGroup className="grid grid-cols-5 sm:grid-cols-6  md:grid-cols-8  lg:grid-cols-10 xl:grid-cols-12  gap-3 group">
         {skills.map((skill, i) => (
-          <FramerComponent key={i} blur="6px" delay={(i + 1) * 0.1} duration={0.4} inViewMargin={0} distance={0}>
+          <FramerComponent
+            key={i}
+            blur="6px"
+            delay={(i + 1) * 0.1}
+            duration={0.4}
+            direction="bottom"
+            inViewMargin={-20}
+            distance={30}
+          >
             <HighlighterItem>
               <div className=" aspect-square grid place-items-center  group/item relative h-full bg-background rounded-[inherit] z-20 overflow-hidden border border-foreground/10">
                 <span className="hidden sm:block absolute transition-all text-xs text-center text-foreground/80 font-semibold invisible opacity-0 -bottom-1 group-hover/item:visible group-hover/item:opacity-100 group-hover/item:bottom-1">

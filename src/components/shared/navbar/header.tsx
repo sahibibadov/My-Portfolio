@@ -12,6 +12,7 @@ const Header = ({ children }: { children: React.ReactNode }) => {
       blur="6px"
       direction="top"
       delay={0.6}
+      distance={0}
       duration={0.7}
       inViewMargin={0}
       className={cn("sticky transition-all top-0 z-50 h-14  dark:shadow-white/10  flex items-center", {
