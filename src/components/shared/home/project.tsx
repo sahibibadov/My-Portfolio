@@ -27,9 +27,17 @@ const Project = async () => {
       </FramerComponent>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {porject?.map((item, i) => (
-          <FramerComponent key={i} blur="6px" delay={(i + 1) * 0.1} duration={0.6} inViewMargin={0} distance={0}>
+          <FramerComponent
+            key={i}
+            blur="6px"
+            delay={(i + 1) * 0.1}
+            direction="bottom"
+            duration={0.6}
+            inViewMargin={-20}
+            distance={30}
+          >
             <CardContainer className="inter-var w-full max-w-full ">
-              <CardBody className=" relative group/card transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background border-black/15 dark:border-border rounded-xl ~p-1/3 border">
+              <CardBody className=" relative group/card transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background border-black/15 dark:border-border rounded-xl p-3 border">
                 <CardItem>
                   <h4 className="~text-base/xl font-semibold text-foreground/45">{item.name}</h4>
                 </CardItem>

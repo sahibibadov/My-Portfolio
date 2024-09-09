@@ -14,12 +14,9 @@ const MobileNavLink = () => {
         <Link
           href={link.path}
           key={i}
-          className={cn(
-            "relative group  font-semibold text-foreground/65 hover:text-foreground transition-all",
-            {
-              "text-foreground": path === link.path,
-            }
-          )}
+          className={cn("relative group  font-semibold text-foreground/65 hover:text-foreground transition-all", {
+            "text-foreground": path === link.path,
+          })}
         >
           <span className="relative z-10">{link.title}</span>
 
@@ -27,7 +24,7 @@ const MobileNavLink = () => {
           {path === link.path && (
             <motion.span
               layoutId="mix-underline"
-              className="absolute -inset-x-2 rounded-md  -inset-y-1 border-2 border-dashed border-border"
+              className="absolute -inset-x-2 rounded-md  -inset-y-1 border-2 border-dashed border-foreground/50"
               transition={{ type: "spring", duration: 0.5 }}
             />
           )}

@@ -5,7 +5,7 @@ export function SparklesPreview({ children, className }: { children: React.React
     <div className="w-full flex flex-col items-center justify-center overflow-hidden rounded-md ~mb-3/4">
       <h1
         className={cn(
-          "mb-2 tracking-tight   font-bold  text-center text-transparent bg-clip-text bg-gradient-to-b from-neutral-900 to-neutral-600 relative z-20 uppercase",
+          "mb-2 tracking-tight   font-bold  text-center text-transparent bg-clip-text bg-gradient-to-tr from-neutral-900 to-neutral-600 relative z-20 uppercase",
           className,
         )}
       >

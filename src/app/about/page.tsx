@@ -9,6 +9,22 @@ export const metadata: Metadata = {
   title: "About",
 };
 const About = () => {
+  // yas hesapla
+  function yasHesapla(dogumTarihi: string) {
+    const bugun = new Date();
+    const dogum = new Date(dogumTarihi);
+
+    let yas = bugun.getFullYear() - dogum.getFullYear();
+    const ayFarki = bugun.getMonth() - dogum.getMonth();
+    const gunFarki = bugun.getDate() - dogum.getDate();
+
+    // Eğer doğum günü bu yıl kutlanmadıysa yaştan 1 düş
+    if (ayFarki < 0 || (ayFarki === 0 && gunFarki < 0)) {
+      yas--;
+    }
+
+    return yas;
+  }
   return (
     <section className="~mt-10/20  w-full">
       <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
@@ -88,7 +104,7 @@ const About = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full size-2 bg-sky-500"></span>
               </span>
-              Age: 26
+              Age: {yasHesapla("1998-04-10")}
             </li>
           </div>
           <div className="~space-y-1/2">
@@ -104,7 +120,7 @@ const About = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full size-2 bg-sky-500"></span>
               </span>
-              Email: ibadovsahib@bk.ru
+              Email: bdvshb@gmail.com
             </li>
             <li className="flex items-center gap-2">
               <span className="relative flex size-2">
