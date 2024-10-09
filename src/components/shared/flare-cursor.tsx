@@ -19,8 +19,8 @@ const FramerCursor: FC<CursorProps> = () => {
 
   // Update cursor position based on mouse position
   useEffect(() => {
-    cursorX.set(mouseX - 16);
-    cursorY.set(mouseY - 16);
+    cursorX.set(mouseX);
+    cursorY.set(mouseY);
 
     // Check if the cursor is over specific elements
     const elements = document.elementsFromPoint(mouseX, mouseY);
@@ -33,7 +33,7 @@ const FramerCursor: FC<CursorProps> = () => {
     setIsPointer(isOverTargetElement);
   }, [mouseX, mouseY, cursorX, cursorY]);
 
-  const variants: Variants = {
+  const variant: Variants = {
     normal: {
       scale: 1,
       transition: {
@@ -41,7 +41,7 @@ const FramerCursor: FC<CursorProps> = () => {
       },
     },
     pointer: {
-      scale: 0.5,
+      scale: 2.5,
       transition: {
         duration: 0.2,
       },
@@ -49,26 +49,29 @@ const FramerCursor: FC<CursorProps> = () => {
   };
 
   return (
-    <motion.div
-      className="pointer-events-none top-0 left-0 fixed z-[10001] hidden md:block"
-      style={{
-        translateX: cursorXSpring,
-        translateY: cursorYSpring,
-      }}
-    >
-      <AnimatePresence>
-        <motion.div
-          className={cn(
-            "mix-blend-mode-difference bg-blend-mode-difference size-9 rounded-full border border-foreground/30 backdrop-blur-sm",
-          )}
-          initial="normal"
-          animate={isPointer ? "pointer" : "normal"}
-          exit="normal"
-          transition={{ duration: 0.2 }}
-          variants={variants}
-        />
-      </AnimatePresence>
-    </motion.div>
+    <AnimatePresence>
+      <motion.div
+        className={cn(
+          " size-14 -top-7 -left-7 rounded-full border select-none pointer-events-none border-foreground/30 fixed z-[99999] ",
+        )}
+        initial="normal"
+        animate={isPointer ? "pointer" : "normal"}
+        transition={{ duration: 0.2 }}
+        variants={variant}
+        style={{
+          translateX: cursorXSpring,
+          translateY: cursorYSpring,
+        }}
+      />
+      <div
+        className={cn(
+          "mix-blend-difference size-4 -top-2 -left-2 select-none pointer-events-none rounded-full bg-white  fixed z-[99999]",
+        )}
+        style={{
+          translate: `${mouseX}px ${mouseY}px`,
+        }}
+      />
+    </AnimatePresence>
   );
 };
 
