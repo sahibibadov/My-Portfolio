@@ -19,7 +19,7 @@ const Hero = () => {
         distance={30}
         className="~text-xl/4xl text-neutral-500 dark:text-neutral-400 font-semibold ~mb-4/10"
       >
-        <span className="mr-1">Fullstack Developer</span>
+        <span className="mr-4">Fullstack Developer</span>
         <Typeanimationtext />
       </FramerComponent>
 

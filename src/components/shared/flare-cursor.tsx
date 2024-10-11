@@ -9,11 +9,11 @@ interface CursorProps {}
 
 const FramerCursor: FC<CursorProps> = () => {
   const [isPointer, setIsPointer] = useState<boolean>(false);
-  const { x: mouseX, y: mouseY } = useMousePosition(); // Hook'u kullan
+  const { x: mouseX, y: mouseY } = useMousePosition();
   const cursorX = useMotionValue<number>(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
   const cursorY = useMotionValue<number>(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
 
-  const springConfig = { damping: 200, stiffness: 3000 };
+  const springConfig = { damping: 50, stiffness: 500 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -47,12 +47,26 @@ const FramerCursor: FC<CursorProps> = () => {
       },
     },
   };
+  const variant2: Variants = {
+    normal: {
+      scale: 1,
+      transition: {
+        duration: 0.2,
+      },
+    },
+    pointer: {
+      scale: 0.6,
+      transition: {
+        duration: 0.2,
+      },
+    },
+  };
 
   return (
     <AnimatePresence>
       <motion.div
         className={cn(
-          " size-14 -top-7 -left-7 rounded-full border select-none pointer-events-none border-foreground/30 fixed z-[99999] ",
+          "size-14 -top-7 -left-7 rounded-full border select-none pointer-events-none border-foreground/30 fixed z-[99999]",
         )}
         initial="normal"
         animate={isPointer ? "pointer" : "normal"}
@@ -63,12 +77,17 @@ const FramerCursor: FC<CursorProps> = () => {
           translateY: cursorYSpring,
         }}
       />
-      <div
+      <motion.div
         className={cn(
           "mix-blend-difference size-4 -top-2 -left-2 select-none pointer-events-none rounded-full bg-white  fixed z-[99999]",
         )}
+        variants={variant2}
+        initial="normal"
+        animate={isPointer ? "pointer" : "normal"}
+        transition={{ duration: 0.2 }}
         style={{
-          translate: `${mouseX}px ${mouseY}px`,
+          translateX: mouseX,
+          translateY: mouseY,
         }}
       />
     </AnimatePresence>
