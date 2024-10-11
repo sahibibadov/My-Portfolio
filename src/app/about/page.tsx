@@ -76,7 +76,7 @@ const About = () => {
         />
 
         {/* content */}
-        <ul className="flex flex-1 flex-col sm:flex-row gap-8 text-foreground/55 text-start ~text-xs/base">
+        <ul className="flex flex-2 flex-col sm:flex-row gap-5 text-foreground/55 text-start ~text-xs/base">
           <div className="~space-y-1/2">
             <li className="flex items-center gap-2">
               <span className="relative flex size-2">

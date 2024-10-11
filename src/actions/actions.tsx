@@ -13,12 +13,13 @@ const formShema = z.object({
     .min(2, { message: "message must be at least 2 characters" })
     .max(500, { message: "message must be at most 500 characters" }),
 });
+type FormData = z.infer<typeof formShema>;
 
 // resend email
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export const sendEmail = async (prevState: any, formData: FormData) => {
-  const parseData = formShema.safeParse(Object.fromEntries(formData));
+export const sendEmail = async (formData: FormData) => {
+  const parseData = formShema.safeParse(formData);
 
   if (!parseData.success) {
     return {
