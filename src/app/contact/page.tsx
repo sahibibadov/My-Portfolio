@@ -7,6 +7,7 @@ import { LoadingIcon } from "../../../public/icon-static/loading-icon";
 
 export const metadata: Metadata = {
   title: "Contact",
+  description: "Get in touch with Sahib Ibadov. Feel free to reach out for collaborations or inquiries.",
 };
 const Earth = dynamic(() => import("@/components/shared/globe/earth"), {
   ssr: false,

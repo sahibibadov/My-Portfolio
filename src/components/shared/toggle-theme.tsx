@@ -22,6 +22,7 @@ export function ThemeToggle() {
   return (
     <Button
       onClick={toggleThem}
+      aria-label="Toggle Theme"
       size="icon"
       variant="outline"
       className="rounded-full border-dashed border-2 transition-all bg-transparent"
@@ -31,6 +32,7 @@ export function ThemeToggle() {
       ) : (
         <Moon className="h-[1.2rem] w-[1.2rem]   transition-all  " />
       )}
+      <span className="sr-only">{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
     </Button>
   );
 }

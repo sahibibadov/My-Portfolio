@@ -13,34 +13,20 @@ const MobileNavbar = () => {
 
   return (
     <Sheet>
-      <SheetTrigger className="md:hidden">
+      <SheetTrigger className="md:hidden" aria-label="Open navigation">
         <MenuIcon className="size-6 rotate-180" />
+        <span className="sr-only">Open navigation</span>
       </SheetTrigger>
-      <SheetContent className="flex flex-col gap-7  ">
+      <SheetContent className="flex flex-col gap-7">
         <ul className="flex flex-col gap-7 mt-10">
           {navlinks.map((link) => (
             <FramerComponent
               key={link.id}
-              variant={{
-                hidden: {
-                  opacity: 0,
-                  x: 100,
-                  filter: "blur(6px)",
-                },
-                visible: {
-                  opacity: 1,
-                  x: 0,
-                  filter: "blur(0px)",
-                  transition: {
-                    type: "spring",
-                    duration: 0.4,
-                    delay: 0.4 * link.id,
-                    damping: 10,
-                    stiffness: 100,
-                    mass: 1,
-                  },
-                },
-              }}
+              blur="10px"
+              direction="right"
+              distance={200}
+              duration={0.4}
+              delay={0.2 * link.id}
             >
               <SheetClose asChild>
                 <Link
@@ -59,7 +45,7 @@ const MobileNavbar = () => {
           ))}
         </ul>
 
-        <FramerComponent blur="6px" direction="right" distance={100} duration={0.4} delay={0.4 * (navlinks.length + 1)}>
+        <FramerComponent blur="6px" direction="right" distance={100} duration={0.4} delay={0.3 * (navlinks.length + 1)}>
           <SocialIcons />
         </FramerComponent>
       </SheetContent>

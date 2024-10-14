@@ -84,7 +84,7 @@ const FramerCursor: FC<CursorProps> = () => {
         variants={variant2}
         initial="normal"
         animate={isPointer ? "pointer" : "normal"}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0 }}
         style={{
           translateX: mouseX,
           translateY: mouseY,

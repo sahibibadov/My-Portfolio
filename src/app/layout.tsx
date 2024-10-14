@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 // import { GeistSans as GeistMono } from "geist/font/sans";
 
 import localFont from "next/font/local";
-import "./globals.css";
+import "@/styles/globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/provider/theme-provider";
 import Header from "@/components/shared/navbar/header";
-import Navabr from "@/components/shared/navbar/navbar";
+import Navbar from "@/components/shared/navbar/navbar";
 import Footer from "@/components/shared/footer/footer";
 import { BackgroundParticle } from "@/components/shared/particle/bg-particle";
 import ScrollToTop from "@/components/shared/scroll-to-top";
@@ -29,6 +29,35 @@ export const metadata: Metadata = {
   },
   description:
     "Portfolio page showcasing projects and experiences by Sahib Ibadov, a frontend developer based in Azerbaijan",
+  keywords: [
+    "Sahib Ibadov",
+    "Sahib",
+    "Ibadov",
+    "Sahib Ibadov Portfolio",
+    "Portfolio",
+    "Frontend Developer",
+    "Projects",
+    "Backend Developer",
+    "React",
+    "Reactjs",
+    "Nextjs",
+  ],
+  openGraph: {
+    title: "Sahib Ibadov | Home",
+    description: "Welcome to the personal portfolio of Sahib Badov, showcasing projects and skills.",
+    url: "https://sahibibadov.vercel.app",
+    siteName: "Sahib Ibadov Portfolio",
+    images: [
+      {
+        url: "/src/app/favicon.ico",
+        width: 500,
+        height: 500,
+        alt: "Sahib Ibadov Portfolio",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -45,7 +74,7 @@ export default function RootLayout({
             <FlareCursor />
             <Toaster position="top-right" closeButton richColors />
             <Header>
-              <Navabr />
+              <Navbar />
             </Header>
             {children}
             <Footer />

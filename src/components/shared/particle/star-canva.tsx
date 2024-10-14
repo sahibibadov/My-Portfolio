@@ -31,7 +31,7 @@ const Stars = (props: any) => {
   );
 };
 
-export const StarsCanvas = () => {
+export default function StarsCanvas() {
   return (
     <div className={cn("w-full h-auto absolute inset-0 z-[-10]")}>
       <Canvas camera={{ position: [0, 0, 1] }}>
@@ -43,4 +43,4 @@ export const StarsCanvas = () => {
       </Canvas>
     </div>
   );
-};
+}

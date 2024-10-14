@@ -7,6 +7,7 @@ import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About",
+  description: "Learn more about Sahib Ibadov, his background, and his experience in web development.",
 };
 const About = () => {
   // yas hesapla
