@@ -72,7 +72,7 @@ export default function FramerComponent({
     layout: layout,
   };
 
-  const Component = asChild ? motion(Slot) : motion.div;
+  const Component = asChild ? motion.create(Slot) : motion.div;
 
   return (
     <AnimatePresence>

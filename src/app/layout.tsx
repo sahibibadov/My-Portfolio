@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-// import { GeistMono } from "geist/font/mono";
-// import { GeistSans as GeistMono } from "geist/font/sans";
-
+import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
 import { cn } from "@/lib/utils";
@@ -14,6 +12,8 @@ import ScrollToTop from "@/components/shared/scroll-to-top";
 import SmoothScroll from "@/provider/smooth-scroll-provider";
 import FlareCursor from "@/components/shared/flare-cursor";
 import { Toaster } from "@/components/ui/sonner";
+import Container from "@/components/shared/container";
+
 const geistSans = localFont({
   src: "./font/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -59,29 +59,31 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
+export const fetchCache = "force-cache";
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={cn("min-h-dvh font-mono   antialiased flex flex-col", geistSans.variable, geistMono.variable)}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <SmoothScroll>
-            <BackgroundParticle />
-            <FlareCursor />
-            <Toaster position="top-right" closeButton richColors />
-            <Header>
-              <Navbar />
-            </Header>
-            {children}
-            <Footer />
-            <ScrollToTop />
-          </SmoothScroll>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <body className={cn("min-h-dvh font-mono   antialiased flex flex-col", geistSans.variable, geistMono.variable)}>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+            <SmoothScroll>
+              <BackgroundParticle />
+              <FlareCursor />
+              <Toaster position="top-right" closeButton richColors />
+              <Header>
+                <Navbar />
+              </Header>
+              <Container className="flex-1 flex flex-col">{children}</Container>
+              <Footer />
+              <ScrollToTop />
+            </SmoothScroll>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

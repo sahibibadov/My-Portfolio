@@ -4,7 +4,7 @@ import FramerComponent from "@/components/shared/motion-element/framer-component
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { LoadingIcon } from "../../../public/icon-static/loading-icon";
-
+export const fetchCache = "force-cache";
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with Sahib Ibadov. Feel free to reach out for collaborations or inquiries.",
@@ -21,7 +21,7 @@ const Contact = () => {
   return (
     <section className="~mt-10/16  w-full  ">
       {/* title */}
-      <FramerComponent blur="10px" delay={2} duration={0.6} direction="bottom" distance={50}>
+      <FramerComponent blur="10px" delay={1} duration={0.6} direction="bottom" distance={50}>
         <SparklesPreview className="text-5xl md:text-6xl lg:text-7xl ">CONTACT ME</SparklesPreview>
       </FramerComponent>
 
@@ -29,7 +29,7 @@ const Contact = () => {
         {/* eratch */}
         <FramerComponent
           blur="10px"
-          delay={3}
+          delay={1.5}
           duration={0.6}
           direction="left"
           distance={200}
@@ -38,7 +38,7 @@ const Contact = () => {
           <Earth />
         </FramerComponent>
         {/* form */}
-        <FramerComponent blur="10px" delay={3} duration={0.6} direction="right" distance={200} className="flex-1">
+        <FramerComponent blur="10px" delay={1.5} duration={0.6} direction="right" distance={200} className="flex-1">
           <ContactForm />
         </FramerComponent>
       </div>

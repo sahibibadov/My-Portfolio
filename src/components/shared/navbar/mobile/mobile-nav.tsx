@@ -1,6 +1,6 @@
 "use client";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { navlinks } from "@/constants";

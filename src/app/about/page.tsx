@@ -1,29 +1,24 @@
 import { SparklesPreview } from "@/components/shared/heading";
-import MotionSection from "@/components/shared/motion-element";
 import FramerComponent from "@/components/shared/motion-element/framer-component";
 import Resume from "@/components/shared/resume";
 import { Metadata } from "next";
 import Image from "next/image";
-
+export const fetchCache = "force-cache";
 export const metadata: Metadata = {
   title: "About",
   description: "Learn more about Sahib Ibadov, his background, and his experience in web development.",
 };
 const About = () => {
-  // yas hesapla
-  function yasHesapla(dogumTarihi: string) {
-    const bugun = new Date();
-    const dogum = new Date(dogumTarihi);
+  function birhDateCalc(day: string) {
+    const now = new Date();
+    const birthDate = new Date(day);
 
-    let yas = bugun.getFullYear() - dogum.getFullYear();
-    const ayFarki = bugun.getMonth() - dogum.getMonth();
-    const gunFarki = bugun.getDate() - dogum.getDate();
-
-    // Eğer doğum günü bu yıl kutlanmadıysa yaştan 1 düş
-    if (ayFarki < 0 || (ayFarki === 0 && gunFarki < 0)) {
+    let yas = now.getFullYear() - birthDate.getFullYear();
+    const monthDif = now.getMonth() - birthDate.getMonth();
+    const dayDif = now.getDate() - birthDate.getDate();
+    if (monthDif < 0 || (monthDif === 0 && dayDif < 0)) {
       yas--;
     }
-
     return yas;
   }
   return (
@@ -105,7 +100,7 @@ const About = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full size-2 bg-sky-500"></span>
               </span>
-              Age: {yasHesapla("1998-04-10")}
+              Age: {birhDateCalc("1998-04-10")}
             </li>
           </div>
           <div className="~space-y-1/2">

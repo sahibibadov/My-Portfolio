@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ScrollTopIcon } from "../../../public/icon-static/scroll-top";
 
-const AnimatedButton = motion(Button);
+const AnimatedButton = motion.create(Button);
 
 const ScrollToTop = () => {
   const show = useValuePassedThreshold(150);
