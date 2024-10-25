@@ -1,26 +1,8 @@
 "use client";
-
-import { TypeAnimation } from "react-type-animation";
-
+import { FlipWords } from "./flip-word";
+const words = ["Reactjs", "Nextjs", "Laravel"];
 const Typeanimationtext = () => {
-  return (
-    <TypeAnimation
-      sequence={[
-        "Reactjs", // Types 'One'
-        2000, // Waits 1s
-        "Nextjs", // Deletes 'One' and types 'Two'
-        2000,
-        "Laravel", // Deletes 'One' and types 'Two'
-        2000,
-
-        () => {},
-      ]}
-      wrapper="span"
-      cursor={true}
-      repeat={Infinity}
-      style={{ fontSize: "inherit", display: "inline-block", color: "#0ea5e9" }}
-    />
-  );
+  return <FlipWords className="text-[#0ea5e9]" words={words} />;
 };
 
 export default Typeanimationtext;

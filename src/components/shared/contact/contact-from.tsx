@@ -8,7 +8,7 @@ import { LabelInputContainer } from "./input-container";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { sendEmail } from "@/actions/actions";
+import { sendEmail } from "@/utils/actions/actions";
 import { toast } from "sonner";
 
 const formSchema = z.object({

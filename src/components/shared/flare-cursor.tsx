@@ -66,7 +66,7 @@ const FramerCursor: FC<CursorProps> = () => {
     <AnimatePresence>
       <motion.div
         className={cn(
-          "size-14 -top-7 -left-7 rounded-full border select-none pointer-events-none border-foreground/30 fixed z-[99999]",
+          "size-14 -top-7 -left-7 rounded-full border select-none pointer-events-none border-foreground/30 fixed z-[99999] hidden sm:block",
         )}
         initial="normal"
         animate={isPointer ? "pointer" : "normal"}
@@ -79,12 +79,12 @@ const FramerCursor: FC<CursorProps> = () => {
       />
       <motion.div
         className={cn(
-          "mix-blend-difference size-4 -top-2 -left-2 select-none pointer-events-none rounded-full bg-white  fixed z-[99999]",
+          "mix-blend-difference size-4 -top-2 -left-2 select-none pointer-events-none rounded-full bg-white  fixed z-[99999] hidden sm:block",
         )}
         variants={variant2}
         initial="normal"
         animate={isPointer ? "pointer" : "normal"}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0 }}
         style={{
           translateX: mouseX,
           translateY: mouseY,
