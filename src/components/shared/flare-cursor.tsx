@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, FC } from "react";
+import { useEffect, useState, FC, useId } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useMousePosition } from "@/hook/useMousePosition"; // Hook'u içe aktar
@@ -8,6 +8,7 @@ import { useMousePosition } from "@/hook/useMousePosition"; // Hook'u içe aktar
 interface CursorProps {}
 
 const FramerCursor: FC<CursorProps> = () => {
+  const id = useId();
   const [isPointer, setIsPointer] = useState<boolean>(false);
   const { x: mouseX, y: mouseY } = useMousePosition();
   const cursorX = useMotionValue<number>(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
@@ -63,7 +64,7 @@ const FramerCursor: FC<CursorProps> = () => {
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence key={id}>
       <motion.div
         className={cn(
           "size-14 -top-7 -left-7 rounded-full border select-none pointer-events-none border-foreground/30 fixed z-[99999] hidden sm:block",

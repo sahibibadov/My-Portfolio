@@ -1,9 +1,10 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useId, useRef } from "react";
 import { AnimatePresence, motion, useInView, Variants } from "framer-motion";
 import { Slot } from "@radix-ui/react-slot";
+import { VariantProps } from "class-variance-authority";
 
-interface AnimatedRevealProps {
+interface AnimatedRevealProps extends VariantProps<typeof motion.div> {
   children: React.ReactNode;
   className?: string;
   direction?: "right" | "bottom" | "left" | "top";
@@ -35,22 +36,21 @@ export default function FramerComponent({
   variant,
   layout = false,
   asChild = false,
+  ...props
 }: AnimatedRevealProps) {
   const ref = useRef(null);
   const inView = useInView(ref, { once, margin: `${inViewMargin}px` });
-
+  const id = useId();
   const defaultVariants: Variants = {
     hidden: {
       translateX: direction === "left" ? -distance : direction === "right" ? distance : 0,
       translateY: direction === "top" ? -distance : direction === "bottom" ? distance : 0,
       opacity: 0,
-      filter: `blur(${blur})`,
     },
     visible: {
       translateX: 0,
       translateY: 0,
       opacity: 1,
-      filter: "blur(0px)",
       transition: {
         type: "spring",
         duration,
@@ -75,8 +75,8 @@ export default function FramerComponent({
   const Component = asChild ? motion.create(Slot) : motion.div;
 
   return (
-    <AnimatePresence>
-      <Component ref={ref} className={className} variants={combinedVariants} {...animationProps}>
+    <AnimatePresence key={id}>
+      <Component {...props} ref={ref} className={className} variants={combinedVariants} {...animationProps}>
         {children}
       </Component>
     </AnimatePresence>
