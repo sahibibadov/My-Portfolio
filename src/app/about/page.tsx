@@ -70,8 +70,8 @@ const About = () => {
         />
 
         {/* content */}
-        <ul className="flex flex-2 flex-col sm:flex-row gap-5 text-foreground/55 text-start ~text-xs/base">
-          <div className="~space-y-1/2">
+        <div className="flex flex-2 flex-col sm:flex-row gap-5 text-foreground/55 text-start ~text-xs/base">
+          <ul className="~space-y-1/2">
             <li className="flex items-center gap-2">
               <span className="relative flex size-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
@@ -100,8 +100,8 @@ const About = () => {
               </span>
               Age: {birhDateCalc("1998-04-10")}
             </li>
-          </div>
-          <div className="~space-y-1/2">
+          </ul>
+          <ul className="~space-y-1/2">
             <li className="flex items-center gap-2">
               <span className="relative flex size-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
@@ -123,8 +123,8 @@ const About = () => {
               </span>
               Freelance: Available
             </li>
-          </div>
-        </ul>
+          </ul>
+        </div>
       </FramerComponent>
 
       {/* resume */}

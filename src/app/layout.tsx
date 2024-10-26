@@ -67,8 +67,8 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <html lang="en">
-        <body className={cn("min-h-dvh font-mono   antialiased flex flex-col", geistSans.variable, geistMono.variable)}>
+      <html lang="en" className="overflow-hidden">
+        <body className={cn("min-h-dvh font-mono antialiased flex flex-col", geistSans.variable, geistMono.variable)}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <SmoothScroll>
               <BackgroundParticle />

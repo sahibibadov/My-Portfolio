@@ -7,10 +7,10 @@ import { IconoirGithub } from "../../../public/icon-static/github";
 
 const SocialIcons = () => {
   return (
-    <ul className="flex items-center ~gap-2/6">
+    <ul className="flex items-center ~gap-4/6">
       <li>
         <Link href="https://github.com/sahibibadov" target="_blank" className="hover:scale-125 transition-all">
-          <IconoirGithub className="size-3 md:size-5" />
+          <IconoirGithub className="size-5" />
           <span className="sr-only">Github Logo</span>
         </Link>
       </li>
@@ -20,7 +20,7 @@ const SocialIcons = () => {
           target="_blank"
           className="hover:scale-125 transition-all"
         >
-          <MdiLinkedin className="size-3 md:size-5" />
+          <MdiLinkedin className="size-5" />
           <span className="sr-only">Linkedin Logo</span>
         </Link>
       </li>
@@ -30,13 +30,13 @@ const SocialIcons = () => {
           target="_blank"
           className="hover:scale-125 transition-all"
         >
-          <MdiInstagram className="size-3 md:size-5" />
+          <MdiInstagram className="size-5" />
           <span className="sr-only">Instagram Logo</span>
         </Link>
       </li>
       <li>
         <Link href="mailto:ibadovsahib@bk.ru" className="hover:scale-125 transition-all">
-          <EpMessage className="size-3 md:size-5" />
+          <EpMessage className="size-5" />
           <span className="sr-only">Email Logo</span>
         </Link>
       </li>

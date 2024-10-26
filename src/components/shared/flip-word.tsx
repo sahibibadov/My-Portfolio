@@ -13,6 +13,7 @@ const TextRotate = ({ words }: { words: string[] }) => {
       });
     }, 2000);
     return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -21,9 +22,9 @@ const TextRotate = ({ words }: { words: string[] }) => {
         <motion.p
           className="absolute text-[#0ea5e9] dark:text-[#0ea5e9]"
           key={index}
-          initial={{ y: -40, opacity: 0, scale: 0.8 }}
+          initial={{ y: 40, opacity: 0, scale: 0.8 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: 40, opacity: 0, scale: 0.8 }}
+          exit={{ y: -40, opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.9, type: "spring" }}
         >
           {words[index]}
