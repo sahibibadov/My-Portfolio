@@ -7,20 +7,13 @@ import FramerComponent from "./motion-element/framer-component";
 const Resume = () => {
   return (
     <section className="~mt-10/32 w-full">
-      <FramerComponent delay={0.4} duration={0.6} direction="bottom" distance={50} inViewMargin={-250}>
+      <FramerComponent delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <h2 className="heading">RESUME</h2>
       </FramerComponent>
       {/* wrapper */}
       <div className="grid grid-cols-1 md:grid-cols-2 ~gap-4/10 ">
         {/* education */}
-        <FramerComponent
-          delay={0.6}
-          direction="left"
-          distance={300}
-          duration={0.7}
-          inViewMargin={-350}
-          className="~space-y-4/6"
-        >
+        <FramerComponent delay={0.6} direction="left" distance={300} duration={0.7} className="~space-y-4/6">
           <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
             <EducationIcon className="size-6 md:size-8" />
             Education
@@ -52,14 +45,7 @@ const Resume = () => {
         </FramerComponent>
 
         {/* experience */}
-        <FramerComponent
-          delay={0.6}
-          direction="right"
-          distance={300}
-          duration={0.7}
-          inViewMargin={-350}
-          className="~space-y-4/6"
-        >
+        <FramerComponent delay={0.6} direction="right" distance={300} duration={0.7} className="~space-y-4/6">
           <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
             <ExperienceIcon className="size-6 md:size-8" /> Experience
           </h4>
