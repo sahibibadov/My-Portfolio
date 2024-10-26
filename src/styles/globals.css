@@ -60,7 +60,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground overflow-x-hidden cursor-none;
+    @apply bg-background text-foreground  cursor-none;
   }
   ::-webkit-scrollbar {
     @apply w-2;
@@ -78,5 +78,28 @@
 @layer components {
   .heading {
     @apply font-sans text-4xl mt-10 ~mb-8/14 md:text-6xl  font-bold  text-center text-transparent bg-clip-text bg-gradient-to-tr from-neutral-900 to-neutral-600 relative z-20 uppercase;
+  }
+}
+
+@layer utilities {
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
   }
 }
