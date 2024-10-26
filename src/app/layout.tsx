@@ -67,7 +67,7 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <html lang="en" className="overflow-x-hidden">
+      <html lang="en">
         <body
           className={cn(
             "min-h-dvh overflow-x-hidden font-mono antialiased flex flex-col",
