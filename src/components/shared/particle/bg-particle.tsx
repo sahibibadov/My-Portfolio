@@ -1,3 +1,4 @@
+"use client";
 import dynamic from "next/dynamic";
 
 const StarsCanvas = dynamic(() => import("@/components/shared/particle/star-canva"), { ssr: false });

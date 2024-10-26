@@ -1,7 +1,7 @@
 "use client";
+import dynamic from "next/dynamic";
 
-import { World } from "./globe";
-
+const World = dynamic(() => import("./globe"), { ssr: false });
 const colors = ["#06b6d4", "#3b82f6", "#6366f1"];
 const sampleArcs = [
   {
