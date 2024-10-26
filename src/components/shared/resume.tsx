@@ -14,10 +14,10 @@ const Resume = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 ~gap-4/10 ">
         {/* education */}
         <FramerComponent delay={0.6} direction="left" distance={300} duration={0.7} className="~space-y-4/6">
-          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
+          <h3 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
             <EducationIcon className="size-6 md:size-8" />
             Education
-          </h4>
+          </h3>
 
           <div className="flex flex-col justify-between  relative flex-1 ">
             {education.map((item) => (
@@ -46,9 +46,9 @@ const Resume = () => {
 
         {/* experience */}
         <FramerComponent delay={0.6} direction="right" distance={300} duration={0.7} className="~space-y-4/6">
-          <h4 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
+          <h3 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
             <ExperienceIcon className="size-6 md:size-8" /> Experience
-          </h4>
+          </h3>
 
           <div className="flex flex-col justify-between  relative flex-1 ">
             {experience.map((item) => (

@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LinkIcon } from "../../../../public/icon-static/link";
-import MotionSection from "../motion-element";
 import { createClient } from "@/utils/supabase/server";
 import { IconoirGithub } from "../../../../public/icon-static/github";
 import FramerComponent from "../motion-element/framer-component";
@@ -38,7 +37,7 @@ const Project = async () => {
             <CardContainer className="inter-var w-full max-w-full ">
               <CardBody className=" relative group/card transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background border-black/15 dark:border-border rounded-xl p-3 border">
                 <CardItem>
-                  <h4 className="~text-base/xl font-semibold text-foreground/45">{item.name}</h4>
+                  <h3 className="~text-base/xl font-semibold text-foreground/45">{item.name}</h3>
                 </CardItem>
                 <CardItem translateZ="100" className="w-full ~mt-2/3">
                   <Image

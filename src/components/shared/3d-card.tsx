@@ -102,9 +102,16 @@ export const CardItem = ({
 
   useEffect(() => {
     handleAnimations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMouseEntered]);
 
-  const handleAnimations = () => {
+  /*************  ✨ Codeium Command ⭐  *************/
+  /**
+   * Updates the transform style of the referenced element based on mouse enter state.
+   * If the mouse is entered, applies the specified translation and rotation values;
+   * otherwise, resets the transform to its default state.
+   */
+  /******  a4bc0e6e-694c-49ea-ac52-b85cc788ca78  *******/ const handleAnimations = () => {
     if (!ref.current) return;
     if (isMouseEntered) {
       ref.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;

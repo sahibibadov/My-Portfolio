@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import React, { useRef, useState, useEffect, PropsWithChildren } from "react";
@@ -80,6 +81,7 @@ type HighlighterItemProps = {
 export const HighlighterItem: React.FC<PropsWithChildren<HighlighterItemProps>> = ({ children, className = "" }) => {
   return (
     <div
+      data-cursor
       className={cn(
         "relative bg-background rounded-xl p-px before:absolute before:w-96 before:h-96 before:-left-48 before:-top-48 before:bg-foreground/20 before:rounded-full before:opacity-0 before:pointer-events-none before:transition-opacity before:duration-500 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:hover:opacity-20 before:z-30 before:blur-[100px] after:absolute after:inset-0 after:rounded-[inherit] after:opacity-0 after:transition-opacity after:duration-500 after:[background:_radial-gradient(80px_circle_at_var(--mouse-x)_var(--mouse-y),theme(colors.zinc.600),transparent)] dark:[background:_radial-gradient(80px_circle_at_var(--mouse-x)_var(--mouse-y),theme(colors.zinc.200),transparent)] after:group-hover:opacity-100 after:z-10 overflow-hidden",
         className,

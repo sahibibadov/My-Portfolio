@@ -22,19 +22,17 @@ const MobileNavbar = () => {
           {navlinks.map((link) => (
             <FramerComponent key={link.id} direction="right" distance={100} duration={0.4} delay={0.2 * link.id}>
               <SheetClose asChild>
-                <li>
-                  <Link
-                    href={link.path}
-                    className={cn(
-                      "relative  font-semibold text-foreground/45 hover:text-foreground transition-all text-4xl ",
-                      {
-                        "text-foreground": path === link.path,
-                      },
-                    )}
-                  >
-                    {link.title}
-                  </Link>
-                </li>
+                <Link
+                  href={link.path}
+                  className={cn(
+                    "relative  font-semibold text-foreground/45 hover:text-foreground transition-all text-4xl ",
+                    {
+                      "text-foreground": path === link.path,
+                    },
+                  )}
+                >
+                  {link.title}
+                </Link>
               </SheetClose>
             </FramerComponent>
           ))}
