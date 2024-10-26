@@ -4,9 +4,9 @@ import FramerComponent from "../motion-element/framer-component";
 
 const Footer = () => {
   return (
-    <FramerComponent delay={0.5} direction="bottom" duration={0.3} blur="6px">
+    <FramerComponent delay={0.5} direction="bottom" duration={0.3}>
       <footer className="border-t ~mt-8/12">
-        <Container className="flex flex-col md:flex-row items-center md:justify-between gap-1 ~p-3/6 backdrop-blur">
+        <Container className="flex flex-col md:flex-row items-center text-center md:justify-between gap-1 ~p-3/6 backdrop-blur">
           <p className="~text-sm/base  tracking-normal">
             Copyright © {new Date().getFullYear()}. Made with by Sahib Ibadov
           </p>

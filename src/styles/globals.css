@@ -71,6 +71,9 @@
   ::-webkit-scrollbar-track {
     @apply bg-background;
   }
+  ::selection {
+    @apply bg-foreground text-background;
+  }
 }
 @layer components {
   .heading {

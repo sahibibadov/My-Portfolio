@@ -23,13 +23,12 @@ const About = () => {
   }
   return (
     <section className="~mt-10/20  w-full">
-      <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
+      <FramerComponent delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <SparklesPreview className="text-5xl md:text-6xl lg:text-7xl ">ABOUT</SparklesPreview>
       </FramerComponent>
 
       {/* about content */}
       <FramerComponent
-        blur="10px"
         delay={0.6}
         duration={0.6}
         direction="bottom"
@@ -52,7 +51,6 @@ const About = () => {
       </FramerComponent>
       {/* image and content */}
       <FramerComponent
-        blur="10px"
         delay={0.8}
         duration={0.6}
         direction="bottom"
@@ -65,8 +63,8 @@ const About = () => {
           src="/images/user.png"
           alt="user"
           quality={100}
-          width={500}
-          height={500}
+          width={300}
+          height={300}
           priority
           className=" object-contain aspect-square w-64 h-64 rounded-md flex-1"
         />

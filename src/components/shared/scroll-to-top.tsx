@@ -35,6 +35,7 @@ const ScrollToTop = () => {
       transition={{ duration: 0.5, ease: "easeInOut" }}
     >
       <ScrollTopIcon className="~size-6/8" />
+      <span className="sr-only">Scroll to top</span>
     </AnimatedButton>
   );
 };

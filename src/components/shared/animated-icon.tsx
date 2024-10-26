@@ -10,9 +10,7 @@ interface CustomLottieProps {
 }
 
 const AnimatedIcon: React.FC<CustomLottieProps> = ({ className, animationData, loop, color }) => {
-  return (
-    <Lottie className={cn(className)} color={color} animationData={animationData} loop={loop} />
-  );
+  return <Lottie className={cn(className)} color={color} animationData={animationData} loop={loop} />;
 };
 
 export default AnimatedIcon;
