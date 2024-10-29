@@ -3,6 +3,7 @@ import Project from "@/components/shared/home/project";
 import Hero from "@/components/shared/home/hero";
 import Skills from "@/components/shared/home/skills";
 export const fetchCache = "force-cache";
+export const dynamic = "force-static";
 export default function Home() {
   return (
     <div className="flex flex-col flex-1">
