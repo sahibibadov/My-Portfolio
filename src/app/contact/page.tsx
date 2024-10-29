@@ -2,14 +2,14 @@ import ContactForm from "@/components/shared/contact/contact-from";
 import { SparklesPreview } from "@/components/shared/heading";
 import FramerComponent from "@/components/shared/motion-element/framer-component";
 import { Metadata } from "next";
-import dynamic from "next/dynamic";
+import dynamicNext from "next/dynamic";
 import { LoadingIcon } from "../../../public/icon-static/loading-icon";
-export const fetchCache = "force-cache";
+export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with Sahib Ibadov. Feel free to reach out for collaborations or inquiries.",
 };
-const Earth = dynamic(() => import("@/components/shared/globe/earth"), {
+const Earth = dynamicNext(() => import("@/components/shared/globe/earth"), {
   ssr: false,
   loading: () => (
     <div className="w-full h-full  grid place-items-center">
