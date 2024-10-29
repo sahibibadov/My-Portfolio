@@ -14,7 +14,6 @@ const MobileNavLink = () => {
         {navlinks.map((link, i) => (
           <li key={i}>
             <Link
-              prefetch={false}
               href={link.path}
               className={cn("relative group  font-semibold text-foreground/65 hover:text-foreground transition-all", {
                 "text-foreground": path === link.path,
