@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sahib Ibadov | Home",
     description: "Welcome to the personal portfolio of Sahib Badov, showcasing projects and skills.",
-    url: "https://sahibibadov.vercel.app",
+    url: "https://sahibibadov.com",
     siteName: "Sahib Ibadov Portfolio",
     images: [
       {
