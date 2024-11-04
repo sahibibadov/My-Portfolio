@@ -1,102 +1,126 @@
 "use client";
 
-import { useEffect, useState, FC, useId } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring, Variants } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { useMousePosition } from "@/hook/useMousePosition"; // Hook'u içe aktar
+import { useEffect, useState, useCallback, useMemo, useId } from "react";
+import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { useMousePosition } from "@/hook/useMousePosition";
 
-interface CursorProps {}
+const SPRING_CONFIG = { damping: 50, stiffness: 500 };
+const TARGET_ELEMENTS = new Set(["h1", "h2", "h3", "button", "a", "input", "label"]);
 
-const FramerCursor: FC<CursorProps> = () => {
-  const id = useId();
-  const [isPointer, setIsPointer] = useState<boolean>(false);
+const FramerCursor = () => {
+  const [mounted, setMounted] = useState(false);
+  const [isPointer, setIsPointer] = useState(false);
   const { x: mouseX, y: mouseY } = useMousePosition();
-  const cursorX = useMotionValue<number>(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
-  const cursorY = useMotionValue<number>(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
+  const id = useId();
 
-  const springConfig = { damping: 50, stiffness: 500 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
 
-  // Update cursor position based on mouse position
+  const cursorXSpring = useSpring(cursorX, SPRING_CONFIG);
+  const cursorYSpring = useSpring(cursorY, SPRING_CONFIG);
+
+  // Mount kontrolü
   useEffect(() => {
-    cursorX.set(mouseX);
-    cursorY.set(mouseY);
+    setMounted(true);
+    cursorX.set(window.innerWidth / 2);
+    cursorY.set(window.innerHeight / 2);
+  }, [cursorX, cursorY]);
 
-    // Check if the cursor is over specific elements
-    const elements = document.elementsFromPoint(mouseX, mouseY);
-    const isOverTargetElement = elements.some(
-      (element) =>
-        ["h1", "h2", "h3", "button", "a", "input", "label"].includes(element.tagName.toLowerCase()) ||
-        element.hasAttribute("data-cursor"),
+  const checkPointerState = useCallback((x: number, y: number) => {
+    const elements = document.elementsFromPoint(x, y);
+    return elements.some(
+      (element) => TARGET_ELEMENTS.has(element.tagName.toLowerCase()) || element.hasAttribute("data-cursor"),
     );
+  }, []);
 
-    setIsPointer(isOverTargetElement);
-  }, [mouseX, mouseY, cursorX, cursorY]);
+  useEffect(() => {
+    if (!mounted) return;
 
-  const variant: Variants = {
-    normal: {
-      scale: 1,
-      transition: {
-        duration: 0.2,
+    let frameId: number;
+
+    const updateCursor = () => {
+      cursorX.set(mouseX);
+      cursorY.set(mouseY);
+      setIsPointer(checkPointerState(mouseX, mouseY));
+      frameId = requestAnimationFrame(updateCursor);
+    };
+
+    frameId = requestAnimationFrame(updateCursor);
+    return () => cancelAnimationFrame(frameId);
+  }, [cursorX, cursorY, mouseX, mouseY, checkPointerState, mounted]);
+
+  const variants = useMemo(
+    () => ({
+      outer: {
+        normal: {
+          scale: 1,
+          transition: { duration: 0.2 },
+        },
+        pointer: {
+          scale: 2.5,
+          transition: { duration: 0.2 },
+        },
       },
-    },
-    pointer: {
-      scale: 2.5,
-      transition: {
-        duration: 0.2,
+      inner: {
+        normal: {
+          scale: 1,
+          transition: { duration: 0.2 },
+        },
+        pointer: {
+          scale: 0.6,
+          transition: { duration: 0.2 },
+        },
       },
-    },
-  };
-  const variant2: Variants = {
-    normal: {
-      scale: 1,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    pointer: {
-      scale: 0.6,
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
+    }),
+    [],
+  );
+
+  const outerCursorStyle = useMemo(
+    () => ({
+      translateX: cursorXSpring,
+      translateY: cursorYSpring,
+      willChange: "transform",
+    }),
+    [cursorXSpring, cursorYSpring],
+  );
+
+  const innerCursorStyle = useMemo(
+    () => ({
+      translateX: mouseX,
+      translateY: mouseY,
+      willChange: "transform",
+    }),
+    [mouseX, mouseY],
+  );
+
+  // Client-side mounting kontrolü
+  if (!mounted) return null;
 
   return (
-    <AnimatePresence key={id}>
-      <motion.div
-        className={cn(
-          "size-14 -top-7 -left-7 rounded-full border select-none pointer-events-none border-foreground/30 fixed z-[99999] hidden sm:block",
-        )}
-        initial="normal"
-        animate={isPointer ? "pointer" : "normal"}
-        transition={{ duration: 0.2 }}
-        variants={variant}
-        style={{
-          translateX: cursorXSpring,
-          translateY: cursorYSpring,
-        }}
-      />
-      <motion.div
-        className={cn(
-          "mix-blend-difference size-4 -top-2 -left-2 select-none pointer-events-none rounded-full bg-white  fixed z-[99999] hidden sm:block",
-        )}
-        variants={variant2}
-        initial="normal"
-        animate={isPointer ? "pointer" : "normal"}
-        transition={{ duration: 0 }}
-        style={{
-          translateX: mouseX,
-          translateY: mouseY,
-        }}
-      />
-    </AnimatePresence>
+    <div className="hidden sm:block">
+      <AnimatePresence mode="sync">
+        <motion.div
+          key={`outer-${id}`}
+          className="size-14 -top-7 -left-7 rounded-full border select-none pointer-events-none border-foreground/30 fixed z-[99999]"
+          initial="normal"
+          animate={isPointer ? "pointer" : "normal"}
+          variants={variants.outer}
+          style={outerCursorStyle}
+        />
+        <motion.div
+          key={`inner-${id}`}
+          className="mix-blend-difference size-4 -top-2 -left-2 select-none pointer-events-none rounded-full bg-white fixed z-[99999]"
+          variants={variants.inner}
+          initial="normal"
+          animate={isPointer ? "pointer" : "normal"}
+          style={innerCursorStyle}
+        />
+      </AnimatePresence>
+    </div>
   );
 };
 
 export default FramerCursor;
-
 /*"use client";
 
 import { cn } from "@/lib/utils";
