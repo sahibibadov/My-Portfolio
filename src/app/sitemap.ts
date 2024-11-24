@@ -5,19 +5,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: "https://sahibibadov.vercel.app/",
+      url: "https://sahibibadov.com/",
       lastModified: currentDate,
       changeFrequency: "monthly",
       priority: 1.0,
     },
     {
-      url: "https://sahibibadov.vercel.app/about",
+      url: "https://sahibibadov.com/about",
       lastModified: currentDate,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://sahibibadov.vercel.app/contact",
+      url: "https://sahibibadov.com/contact",
       lastModified: currentDate,
       changeFrequency: "yearly",
       priority: 0.6,

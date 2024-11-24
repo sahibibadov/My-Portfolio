@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://sahibibadov.vercel.app/",
+    sitemap: "https://sahibibadov.com/",
   };
 }

@@ -1,33 +1,29 @@
-import { useEffect, useState } from "react";
+"use client";
 
-const useScrollPosition = () => {
+import { useState, useEffect, useCallback } from "react";
+
+const useScrollPosition = (): number => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  useEffect(() => {
+  const handleScroll = useCallback(() => {
     setScrollPosition(window.scrollY);
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
   }, []);
+
+  useEffect(() => {
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   return scrollPosition;
 };
 
-const useValuePassedThreshold = (threshold: number) => {
+const useValuePassedThreshold = (threshold: number): boolean => {
   const scrollPosition = useScrollPosition();
   const [passedThreshold, setPassedThreshold] = useState(false);
 
   useEffect(() => {
-    if (scrollPosition >= threshold) {
-      setPassedThreshold(true);
-    } else {
-      setPassedThreshold(false);
-    }
+    setPassedThreshold(scrollPosition >= threshold);
   }, [scrollPosition, threshold]);
 
   return passedThreshold;
