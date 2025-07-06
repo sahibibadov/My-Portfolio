@@ -22,6 +22,9 @@ import { SimpleIconsFramer } from "../../public/icon-static/framer";
 import { SimpleIconsAxios } from "../../public/icon-static/axios";
 import { SimpleIconsReacthookform } from "../../public/icon-static/react-hook-form";
 import { SimpleIconsZod } from "../../public/icon-static/zod";
+import { SwiftIcon } from "../../public/icon-static/swift";
+import { SwiftuiIcon } from "../../public/icon-static/swiftui";
+import { UikitIcon } from "../../public/icon-static/uikit";
 
 export const navlinks = [
   {
@@ -76,17 +79,24 @@ export const education = [
     pulsa: <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>,
   },
 ];
+
 export const experience = [
   {
     title: "Bank Respublica",
-    specialty: "Web Developer",
-    year: "aug 2024 - present",
+    specialty: "IOS Developer",
+    year: "may 2025 - present",
     pulsa: (
       <span className="relative flex h-3 w-3 scale-125">
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
         <span className="relative  inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
       </span>
     ),
+  },
+  {
+    title: "Bank Respublica",
+    specialty: "Web Developer",
+    year: "aug 2024 - may 2025",
+    pulsa: <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-400 dark:bg-neutral-700"></span>,
   },
   {
     title: "Atl Academy",
@@ -115,6 +125,18 @@ export const experience = [
 ];
 
 export const skills = [
+  {
+    name: "Swift",
+    icon: SwiftIcon,
+  },
+  {
+    name: "SwiftUI",
+    icon: SwiftuiIcon,
+  },
+  {
+    name: "UIKit",
+    icon: UikitIcon,
+  },
   {
     name: "NextJs",
     icon: Nextjsicon,
