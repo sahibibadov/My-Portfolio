@@ -3,24 +3,14 @@ import FramerComponent from "@/components/shared/motion-element/framer-component
 import Resume from "@/components/shared/resume";
 import { Metadata } from "next";
 import Image from "next/image";
+import Age from "@/components/shared/about/age";
+
 export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "About",
   description: "Learn more about Sahib Ibadov, his background, and his experience in web development.",
 };
 const About = () => {
-  function birhDateCalc(day: string) {
-    const now = new Date();
-    const birthDate = new Date(day);
-
-    let yas = now.getFullYear() - birthDate.getFullYear();
-    const monthDif = now.getMonth() - birthDate.getMonth();
-    const dayDif = now.getDate() - birthDate.getDate();
-    if (monthDif < 0 || (monthDif === 0 && dayDif < 0)) {
-      yas--;
-    }
-    return yas;
-  }
   return (
     <section className="~mt-10/20  w-full">
       <FramerComponent delay={0.4} duration={0.6} direction="bottom" distance={50}>
@@ -36,17 +26,22 @@ const About = () => {
         className="~space-y-2/4 ~mt-4/8   *:text-center md:text-start text-foreground/75 ~text-sm/base"
       >
         <p>
-          Hello there! I&apos;m Sahib Ibadov a passionate and result-oriented Frontend Developer with a commitment to
-          building user-centered, efficient and visually appealing web applications. With more than 1 year of experience
-          as a frontend developer, I thrive on turning innovative ideas into seamless digital experiences.
+          Hello there! I&apos;m Sahib Ibadov, a passionate and result-oriented <strong>iOS Developer</strong> with
+          experience in building user-centered, efficient, and visually engaging mobile applications for Apple
+          platforms. I specialize in <strong>Swift</strong>, <strong>SwiftUI</strong>, and <strong>UIKit</strong>, and I
+          enjoy turning ideas into smooth and interactive iOS experiences.
         </p>
         <p>
-          My basic stack is React.js, Next.js and Tailwind. I&apos;m also familiar with the TypeScript and Javascript
-          programming language. I&apos;m always looking to learn new technologies.
+          Alongside iOS development, I also work as a <strong>Frontend Developer</strong>, creating modern and
+          responsive web applications. My main stack includes <strong>React.js</strong>, <strong>Next.js</strong>, and{" "}
+          <strong>Tailwind CSS</strong>, and I&apos;m proficient in both <strong>JavaScript</strong> and{" "}
+          <strong>TypeScript</strong>. I&apos;m always eager to explore and learn new technologies that enhance the user
+          experience.
         </p>
         <p>
-          When I&apos;m not coding, I enjoy playing football, listening to music, play video games and watch YouTube. I
-          also enjoy listening to podcasts, read articles and stuff and watch doumentaries about different things
+          When I&apos;m not coding, I enjoy playing football, listening to music, playing video games, and watching
+          YouTube. I also like listening to podcasts, reading articles, and watching documentaries on a variety of
+          topics.
         </p>
       </FramerComponent>
       {/* image and content */}
@@ -98,7 +93,7 @@ const About = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full size-2 bg-sky-500"></span>
               </span>
-              Age: {birhDateCalc("1998-04-10")}
+              Age: <Age birth="1998-04-10" />
             </li>
           </ul>
           <ul className="~space-y-1/2">

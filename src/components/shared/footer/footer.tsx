@@ -1,6 +1,7 @@
+"use client";
 import Container from "@/components/shared/container";
-import SocialIcons from "../social-icons";
-import FramerComponent from "../motion-element/framer-component";
+import SocialIcons from "@/components/shared/social-icons";
+import FramerComponent from "@/components/shared/motion-element/framer-component";
 
 const Footer = () => {
   return (
