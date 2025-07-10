@@ -21,10 +21,10 @@ const Hero = () => {
         distance={50}
         className="~text-xl/4xl relative inline-flex flex-col gap-1 md:gap-2  text-neutral-500 dark:text-neutral-400 font-semibold ~mb-4/14"
       >
-        <h3 className="">IOS(SwiftUI | UIKit) & Fullstack Developer</h3>
+        <p>IOS(SwiftUI | UIKit) & Fullstack Developer</p>
         <MorphingText
           texts={texts}
-          className="~text-xl/4xl text-[#0ea5e9] dark:text-[#0ea5e9] bg-gradient-to-t font-bold"
+          className="~text-xl/4xl text-[#0ea5e9] dark:text-[#0ea5e9] bg-gradient-to-t font-bold max-md:mb-4"
         />
       </FramerComponent>
 

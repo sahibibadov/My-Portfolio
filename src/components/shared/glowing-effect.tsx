@@ -217,7 +217,7 @@ const SkillItem = ({ skill, index }: SkillItemProps) => {
             borderWidth={1}
           />
 
-          <div className="aspect-square grid place-items-center group/item relative h-full bg-background rounded-[inherit] z-20 overflow-hidden border border-foreground/10">
+          <div className="aspect-square grid place-items-center group/item relative h-full bg-background/10 rounded-[inherit] z-20 overflow-hidden border border-foreground/10 backdrop-blur-md">
             <span className="hidden sm:block absolute transition-all text-xs text-center text-foreground/80 font-semibold invisible opacity-0 -bottom-1 group-hover/item:visible group-hover/item:opacity-100 group-hover/item:bottom-1">
               {skill.name}
             </span>
