@@ -1,14 +1,10 @@
+"use client";
+
 import ContactForm from "@/components/shared/contact/contact-from";
 import { SparklesPreview } from "@/components/shared/heading";
 import FramerComponent from "@/components/shared/motion-element/framer-component";
-import { Metadata } from "next";
 import dynamicNext from "next/dynamic";
 import { LoadingIcon } from "../../../public/icon-static/loading-icon";
-export const dynamic = "force-static";
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Sahib Ibadov. Feel free to reach out for collaborations or inquiries.",
-};
 const Earth = dynamicNext(() => import("@/components/shared/globe/earth"), {
   ssr: false,
   loading: () => (

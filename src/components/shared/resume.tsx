@@ -65,9 +65,9 @@ const Resume = () => {
           </h3>
 
           <div className="flex flex-col justify-between  relative flex-1 ">
-            {experience.map((item) => (
+            {experience.map((item, index) => (
               <div
-                key={item.title}
+                key={index}
                 className="relative flex gap-5 items-start pb-5 after:content-[''] after:absolute after:top-0 after:left-1.5  after:h-full after:w-px after:bg-neutral-400 dark:after:bg-neutral-700 after:-z-[1] last:after:hidden"
               >
                 {item.pulsa}
