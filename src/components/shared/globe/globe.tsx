@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Color, Scene, Fog, PerspectiveCamera, Vector3 } from "three";
 import ThreeGlobe from "three-globe";
-import { useThree, Object3DNode, Canvas, extend } from "@react-three/fiber";
+import { useThree, Canvas, extend } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import countries from "@/constants/earth/globe.json";
 declare module "@react-three/fiber" {
   interface ThreeElements {
-    threeGlobe: Object3DNode<ThreeGlobe, typeof ThreeGlobe>;
+    threeGlobe: any;
   }
 }
 
@@ -119,7 +119,13 @@ export function Globe({ globeConfig, data }: WorldProps) {
     let points = [];
     for (let i = 0; i < arcs.length; i++) {
       const arc = arcs[i];
-      const rgb = hexToRgb(arc.color) as { r: number; g: number; b: number };
+      const rgb = hexToRgb(arc.color) || { r: 255, g: 255, b: 255 };
+
+      // Validate coordinates
+      if (isNaN(arc.startLat) || isNaN(arc.startLng) || isNaN(arc.endLat) || isNaN(arc.endLng)) {
+        continue;
+      }
+
       points.push({
         size: defaultProps.pointSize,
         order: arc.order,
@@ -136,11 +142,25 @@ export function Globe({ globeConfig, data }: WorldProps) {
       });
     }
 
-    // remove duplicates for same lat and lng
-    const filteredPoints = points.filter(
-      (v, i, a) =>
-        a.findIndex((v2) => ["lat", "lng"].every((k) => v2[k as "lat" | "lng"] === v[k as "lat" | "lng"])) === i,
-    );
+    // remove duplicates for same lat and lng and validate data
+    const filteredPoints = points.filter((v, i, a) => {
+      // First check if the point has valid coordinates
+      if (!v || isNaN(v.lat) || isNaN(v.lng) || v.lat === null || v.lng === null) {
+        return false;
+      }
+
+      // Then check for duplicates
+      return (
+        a.findIndex(
+          (v2) =>
+            v2 &&
+            !isNaN(v2.lat) &&
+            !isNaN(v2.lng) &&
+            Math.abs(v2.lat - v.lat) < 0.001 &&
+            Math.abs(v2.lng - v.lng) < 0.001,
+        ) === i
+      );
+    });
 
     setGlobeData(filteredPoints);
   };
@@ -164,27 +184,48 @@ export function Globe({ globeConfig, data }: WorldProps) {
   const startAnimation = () => {
     if (!globeRef.current || !globeData) return;
 
+    // Filter valid data
+    const validData = data.filter(
+      (d) => !isNaN(d.startLat) && !isNaN(d.startLng) && !isNaN(d.endLat) && !isNaN(d.endLng) && !isNaN(d.arcAlt),
+    );
+
     globeRef.current
-      .arcsData(data)
-      .arcStartLat((d) => (d as { startLat: number }).startLat * 1)
-      .arcStartLng((d) => (d as { startLng: number }).startLng * 1)
-      .arcEndLat((d) => (d as { endLat: number }).endLat * 1)
-      .arcEndLng((d) => (d as { endLng: number }).endLng * 1)
-      .arcColor((e: any) => (e as { color: string }).color)
+      .arcsData(validData)
+      .arcStartLat((d) => {
+        const lat = (d as { startLat: number }).startLat;
+        return isNaN(lat) ? 0 : lat;
+      })
+      .arcStartLng((d) => {
+        const lng = (d as { startLng: number }).startLng;
+        return isNaN(lng) ? 0 : lng;
+      })
+      .arcEndLat((d) => {
+        const lat = (d as { endLat: number }).endLat;
+        return isNaN(lat) ? 0 : lat;
+      })
+      .arcEndLng((d) => {
+        const lng = (d as { endLng: number }).endLng;
+        return isNaN(lng) ? 0 : lng;
+      })
+      .arcColor((e: any) => (e as { color: string }).color || "#ffffff")
       .arcAltitude((e) => {
-        return (e as { arcAlt: number }).arcAlt * 1;
+        const alt = (e as { arcAlt: number }).arcAlt;
+        return isNaN(alt) ? 0.1 : alt;
       })
       .arcStroke((e) => {
         return [0.32, 0.28, 0.3][Math.round(Math.random() * 2)];
       })
       .arcDashLength(defaultProps.arcLength)
-      .arcDashInitialGap((e) => (e as { order: number }).order * 1)
+      .arcDashInitialGap((e) => {
+        const order = (e as { order: number }).order;
+        return isNaN(order) ? 1 : order;
+      })
       .arcDashGap(15)
       .arcDashAnimateTime((e) => defaultProps.arcTime);
 
     globeRef.current
-      .pointsData(data)
-      .pointColor((e) => (e as { color: string }).color)
+      .pointsData(validData)
+      .pointColor((e) => (e as { color: string }).color || "#ffffff")
       .pointsMerge(true)
       .pointAltitude(0.0)
       .pointRadius(2);
@@ -202,9 +243,17 @@ export function Globe({ globeConfig, data }: WorldProps) {
 
     const interval = setInterval(() => {
       if (!globeRef.current || !globeData) return;
-      numbersOfRings = genRandomNumbers(0, data.length, Math.floor((data.length * 4) / 5));
 
-      globeRef.current.ringsData(globeData.filter((d, i) => numbersOfRings.includes(i)));
+      // Validate globeData before using
+      const validGlobeData = globeData.filter(
+        (d) => d && !isNaN(d.lat) && !isNaN(d.lng) && d.lat !== null && d.lng !== null,
+      );
+
+      if (validGlobeData.length === 0) return;
+
+      numbersOfRings = genRandomNumbers(0, validGlobeData.length, Math.floor((validGlobeData.length * 4) / 5));
+
+      globeRef.current.ringsData(validGlobeData.filter((d, i) => numbersOfRings.includes(i)));
     }, 2000);
 
     return () => {
@@ -258,26 +307,47 @@ export default function World(props: WorldProps) {
 }
 
 export function hexToRgb(hex: string) {
+  // Validate input
+  if (!hex || typeof hex !== "string") {
+    return { r: 255, g: 255, b: 255 }; // Default to white
+  }
+
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace(shorthandRegex, function (m, r, g, b) {
     return r + r + g + g + b + b;
   });
 
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
-    : null;
+  if (result) {
+    const r = parseInt(result[1], 16);
+    const g = parseInt(result[2], 16);
+    const b = parseInt(result[3], 16);
+
+    // Validate parsed values
+    if (isNaN(r) || isNaN(g) || isNaN(b)) {
+      return { r: 255, g: 255, b: 255 };
+    }
+
+    return { r, g, b };
+  }
+
+  return { r: 255, g: 255, b: 255 }; // Default to white if parsing fails
 }
 
 export function genRandomNumbers(min: number, max: number, count: number) {
+  // Validate inputs
+  if (isNaN(min) || isNaN(max) || isNaN(count) || min >= max || count <= 0) {
+    return [];
+  }
+
   const arr = [];
-  while (arr.length < count) {
+  const maxAttempts = count * 10; // Prevent infinite loops
+  let attempts = 0;
+
+  while (arr.length < count && attempts < maxAttempts) {
     const r = Math.floor(Math.random() * (max - min)) + min;
     if (arr.indexOf(r) === -1) arr.push(r);
+    attempts++;
   }
 
   return arr;

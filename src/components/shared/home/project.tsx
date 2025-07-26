@@ -8,7 +8,7 @@ import { IconoirGithub } from "../../../../public/icon-static/github";
 import FramerComponent from "../motion-element/framer-component";
 
 const Project = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   let { data: porject, error } = await supabase.from("porject").select("*");
 

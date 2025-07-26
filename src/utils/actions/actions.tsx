@@ -32,7 +32,7 @@ export const sendEmail = async (formData: FormData) => {
       from: "Contact Form <onboarding@resend.dev>",
       to: "bdvshb@gmail.com",
       subject: `New message from ${parseData.data.name}`,
-      reply_to: parseData.data.email,
+      replyTo: parseData.data.email,
       text: parseData.data.message,
     });
 

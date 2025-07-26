@@ -115,13 +115,14 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={cn(
             "min-h-dvh overflow-x-hidden font-mono antialiased flex flex-col",
             geistSans.variable,
             geistMono.variable,
           )}
+          suppressHydrationWarning
         >
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <SmoothScroll>
