@@ -21,12 +21,13 @@ const Project = async () => {
   }
   return (
     <section className="~mt-10/20 text-center w-full">
-      <FramerComponent delay={0.4} duration={0.6} direction="bottom" distance={50}>
+      <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <h2 className="heading">PROJECT</h2>
       </FramerComponent>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {porject?.map((item, i) => (
           <FramerComponent
+            blur="10px"
             key={i}
             delay={(i + 1) * 0.1}
             direction="bottom"

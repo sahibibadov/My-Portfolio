@@ -11,6 +11,7 @@ import FramerComponent from "../motion-element/framer-component";
 const Navbar = () => {
   return (
     <FramerComponent
+      blur="10px"
       direction="top"
       delay={0.3}
       distance={50}

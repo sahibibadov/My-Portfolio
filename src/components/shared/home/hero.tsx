@@ -8,13 +8,14 @@ const texts = ["Next.js", "SwiftUI", "UIKit", "React"];
 const Hero = () => {
   return (
     <section className="~mt-14/48 text-center w-full ">
-      <FramerComponent delay={0.2} duration={0.6} direction="bottom" distance={50} className="~mb-4/8">
+      <FramerComponent blur="10px" delay={0.2} duration={0.6} direction="bottom" distance={50} className="~mb-4/8">
         <SparklesPreview className="text-5xl md:text-6xl lg:text-8xl font-sans">
           Hi, I&apos;m Ibadov Sahib
         </SparklesPreview>
       </FramerComponent>
 
       <FramerComponent
+        blur="10px"
         delay={0.4}
         duration={0.6}
         direction="bottom"
@@ -34,7 +35,7 @@ const Hero = () => {
           but also unleash your business&apos;s full potential.
         </p>
       </FramerComponent>
-      <FramerComponent delay={1} duration={0.6} direction="bottom" distance={50}>
+      <FramerComponent blur="10px" delay={1} duration={0.6} direction="bottom" distance={50}>
         <Button variant="custom" asChild>
           <a download href="/sahib-ios-cv.pdf">
             Download CV

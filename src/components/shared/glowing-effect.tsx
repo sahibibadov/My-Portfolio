@@ -196,6 +196,7 @@ interface SkillItemProps {
 const SkillItem = ({ skill, index }: SkillItemProps) => {
   return (
     <FramerComponent
+      blur="10px"
       key={index}
       delay={(index + 1) * 0.1}
       duration={0.4}
