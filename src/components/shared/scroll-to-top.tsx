@@ -31,6 +31,7 @@ const ScrollToTop = () => {
         scale: show ? 1 : 0,
         opacity: show ? 1 : 0,
         y: show ? 0 : 150,
+        filter: show ? "blur(0px)" : "blur(10px)",
       }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
     >

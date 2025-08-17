@@ -7,13 +7,14 @@ import FramerComponent from "./motion-element/framer-component";
 const Resume = () => {
   return (
     <section className="~mt-10/32 w-full">
-      <FramerComponent delay={0.4} duration={0.6} direction="bottom" distance={50}>
+      <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <h2 className="heading">RESUME</h2>
       </FramerComponent>
       {/* wrapper */}
       <div className="grid grid-cols-1 md:grid-cols-2 ~gap-4/10 ">
         {/* education */}
         <FramerComponent
+          blur="10px"
           delay={0.6}
           direction="left"
           distance={50}
@@ -53,6 +54,7 @@ const Resume = () => {
 
         {/* experience */}
         <FramerComponent
+          blur="10px"
           delay={0.6}
           direction="right"
           distance={50}

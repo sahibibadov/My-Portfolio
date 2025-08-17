@@ -72,6 +72,7 @@ export const metadata: Metadata = {
     "Swift",
     "Swift developer",
     "SwiftUI",
+    "UIKit",
     "Xcode",
     "Apple developer",
     "Mobile developer",
