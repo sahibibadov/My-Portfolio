@@ -9,7 +9,14 @@ import { useTheme } from "next-themes";
 import type { Points as ThreePoints } from "three";
 const Stars = ({ color }: { color: string }) => {
   const ref = useRef<ThreePoints>(null);
-  const [sphere] = useState(() => Float32Array.from(random.inSphere(new Float64Array(3000), { radius: 1.2 })));
+  const [sphere] = useState(() => {
+    const s = random.inSphere(new Float32Array(3000), { radius: 1.2 }) as Float32Array;
+    // Sanity check: Ensure no NaN values
+    for (let i = 0; i < s.length; i++) {
+      if (isNaN(s[i])) s[i] = 0;
+    }
+    return s;
+  });
   const rotate = useCallback((delta: number) => {
     if (ref.current) {
       ref.current.rotation.x -= delta / 20;
