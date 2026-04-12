@@ -6,7 +6,7 @@ import { MdiInstagram } from "../../../public/icon-static/instagram";
 import { EpMessage } from "../../../public/icon-static/mail";
 import { IconoirGithub } from "../../../public/icon-static/github";
 
-const iconMap: Record<string, React.ElementType> = {
+const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
   IconoirGithub,
   MdiLinkedin,
   MdiInstagram,
