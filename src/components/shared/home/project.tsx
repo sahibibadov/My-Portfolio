@@ -3,22 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LinkIcon } from "../../../../public/icon-static/link";
-import { createClient } from "@/utils/supabase/server";
 import { IconoirGithub } from "../../../../public/icon-static/github";
 import FramerComponent from "../motion-element/framer-component";
+import projects from "@/data/projects.json";
 
-const Project = async () => {
-  const supabase = await createClient();
-
-  let { data: porject, error } = await supabase.from("porject").select("*");
-
-  if (error) {
-    return (
-      <div>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
-      </div>
-    );
-  }
+const Project = () => {
+  const porject = projects;
   return (
     <section className="~mt-10/20 text-center w-full">
       <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
