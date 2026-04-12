@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo, useId } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
 import { useMousePosition } from "@/hook/useMousePosition";
 
 const SPRING_CONFIG = { damping: 50, stiffness: 500 };

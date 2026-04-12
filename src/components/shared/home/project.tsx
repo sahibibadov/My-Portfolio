@@ -11,7 +11,7 @@ import projects from "@/data/projects.json";
 const Project = () => {
   const porject = projects;
   return (
-    <section className="~mt-10/20 text-center w-full">
+    <section className="mt-10 md:mt-20 text-center w-full">
       <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <h2 className="heading">PROJECT</h2>
       </FramerComponent>
@@ -29,9 +29,9 @@ const Project = () => {
             <CardContainer className="inter-var w-full max-w-full ">
               <CardBody className=" relative group/card transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background border-black/15 dark:border-border rounded-xl p-3 border">
                 <CardItem>
-                  <h3 className="~text-base/xl font-semibold text-foreground/45">{item.name}</h3>
+                  <h3 className="text-base md:text-xl font-semibold text-foreground/45">{item.name}</h3>
                 </CardItem>
-                <CardItem translateZ="100" className="w-full ~mt-2/3">
+                <CardItem translateZ="100" className="w-full mt-2 md:mt-3">
                   <Image
                     src={item.image}
                     height="200"
@@ -43,12 +43,12 @@ const Project = () => {
                     alt="thumbnail"
                   />
                 </CardItem>
-                <div className="flex justify-between items-center ~mt-2/3">
+                <div className="flex justify-between items-center mt-2 md:mt-3">
                   <CardItem translateZ={20}>
                     <Link
                       href={item.demoLink}
                       target="__blank"
-                      className="~px-1/4 ~py-0/2 rounded-xl ~text-sm/base font-semibold border border-transparent hover:border-border text-foreground/45 flex items-center gap-2 transition-none"
+                      className="px-1 md:px-4 py-0 md:py-2 rounded-xl text-sm md:text-base font-semibold border border-transparent hover:border-border text-foreground/45 flex items-center gap-2 transition-none"
                     >
                       Live Demo
                       <LinkIcon className="size-3 md:size-4" />

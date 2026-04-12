@@ -5,7 +5,7 @@ import { SkillItem } from "@/components/shared/glowing-effect";
 
 const Skills = () => {
   return (
-    <section className="~mt-10/20 w-full">
+    <section className="mt-10 md:mt-20 w-full">
       <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <h2 className="heading">Skills</h2>
       </FramerComponent>

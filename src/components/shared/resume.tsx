@@ -6,12 +6,12 @@ import FramerComponent from "./motion-element/framer-component";
 
 const Resume = () => {
   return (
-    <section className="~mt-10/32 w-full">
+    <section className="mt-10 md:mt-32 w-full">
       <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <h2 className="heading">RESUME</h2>
       </FramerComponent>
       {/* wrapper */}
-      <div className="grid grid-cols-1 md:grid-cols-2 ~gap-4/10 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 ">
         {/* education */}
         <FramerComponent
           blur="10px"
@@ -20,9 +20,9 @@ const Resume = () => {
           distance={50}
           inViewMargin={-50}
           duration={0.7}
-          className="~space-y-4/6"
+          className="space-y-4 md:space-y-6"
         >
-          <h3 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
+          <h3 className="text-base md:text-xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
             <EducationIcon className="size-6 md:size-8" />
             Education
           </h3>
@@ -35,13 +35,13 @@ const Resume = () => {
               >
                 {item.pulsa}
                 <div className="relative -translate-y-2 flex-1 space-y-2">
-                  <h4 className="~text-base/xl font-semibold text-neutral-700 dark:text-neutral-300">{item.title}</h4>
+                  <h4 className="text-base md:text-xl font-semibold text-neutral-700 dark:text-neutral-300">{item.title}</h4>
                   <div className="flex justify-between gap-2 text-neutral-600 dark:text-neutral-400 pb-3 border-b">
                     <div className="space-y-1">
-                      <p className="~text-sm/base">{item.uni}</p>
-                      <p className="~text-xs/base">{item.specialty}</p>
+                      <p className="text-sm md:text-base">{item.uni}</p>
+                      <p className="text-xs md:text-base">{item.specialty}</p>
                     </div>
-                    <div className="whitespace-nowrap ~text-xs/base flex items-center gap-2">
+                    <div className="whitespace-nowrap text-xs md:text-base flex items-center gap-2">
                       <Calendar className="size-4" />
                       {item.year}
                     </div>
@@ -60,9 +60,9 @@ const Resume = () => {
           distance={50}
           inViewMargin={-50}
           duration={0.7}
-          className="~space-y-4/6"
+          className="space-y-4 md:space-y-6"
         >
-          <h3 className="~text-base/xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
+          <h3 className="text-base md:text-xl font-semibold uppercase flex items-center gap-2 justify-center md:justify-start">
             <ExperienceIcon className="size-6 md:size-8" /> Experience
           </h3>
 
@@ -74,12 +74,12 @@ const Resume = () => {
               >
                 {item.pulsa}
                 <div className="relative -translate-y-2 flex-1 space-y-2">
-                  <h4 className="~text-base/xl font-semibold text-neutral-700 dark:text-neutral-300">{item.title}</h4>
+                  <h4 className="text-base md:text-xl font-semibold text-neutral-700 dark:text-neutral-300">{item.title}</h4>
                   <div className="flex justify-between gap-2 text-neutral-600 dark:text-neutral-400 pb-3 border-b">
                     <div>
-                      <p className="~text-sm/base">{item.specialty}</p>
+                      <p className="text-sm md:text-base">{item.specialty}</p>
                     </div>
-                    <div className="whitespace-nowrap ~text-xs/base flex items-center gap-2">
+                    <div className="whitespace-nowrap text-xs md:text-base flex items-center gap-2">
                       <Calendar className="size-4" />
                       {item.year}
                     </div>

@@ -7,7 +7,7 @@ import { IconoirGithub } from "../../../public/icon-static/github";
 
 const SocialIcons = () => {
   return (
-    <ul className="flex items-center ~gap-4/6">
+    <ul className="flex items-center gap-4 md:gap-6">
       <li>
         <Link href="https://github.com/sahibibadov" target="_blank" className="hover:scale-125 transition-all">
           <IconoirGithub className="size-5" />

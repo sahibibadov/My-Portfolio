@@ -1,6 +1,6 @@
 "use client";
 import { useMousePosition } from "@/hook/useMousePosition";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 import { useId, useState } from "react";
 
