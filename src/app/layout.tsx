@@ -92,6 +92,10 @@ export const metadata: Metadata = {
     "iOS app portfolio",
     "iOS app projects",
   ],
+  icons: {
+    icon: "/icon.svg",
+    apple: "/apple-icon.svg",
+  },
   openGraph: {
     title: "Sahib Ibadov | Home",
     description: "Welcome to the personal portfolio of Sahib Badov, showcasing projects and skills.",
@@ -99,9 +103,9 @@ export const metadata: Metadata = {
     siteName: "Sahib Ibadov Portfolio",
     images: [
       {
-        url: "/src/app/favicon.ico",
-        width: 500,
-        height: 500,
+        url: "/icon.svg",
+        width: 100,
+        height: 100,
         alt: "Sahib Ibadov Portfolio",
       },
     ],
