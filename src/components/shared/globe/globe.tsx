@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import { Color, Scene, Fog, PerspectiveCamera, Vector3 } from "three";
 import ThreeGlobe from "three-globe";
 import { useThree, Canvas, extend } from "@react-three/fiber";
@@ -122,7 +122,17 @@ export function Globe({ globeConfig, data }: WorldProps) {
       const rgb = hexToRgb(arc.color) || { r: 255, g: 255, b: 255 };
 
       // Validate coordinates
-      if (isNaN(arc.startLat) || isNaN(arc.startLng) || isNaN(arc.endLat) || isNaN(arc.endLng)) {
+      if (
+        !arc ||
+        typeof arc.startLat !== "number" ||
+        typeof arc.startLng !== "number" ||
+        typeof arc.endLat !== "number" ||
+        typeof arc.endLng !== "number" ||
+        isNaN(arc.startLat) ||
+        isNaN(arc.startLng) ||
+        isNaN(arc.endLat) ||
+        isNaN(arc.endLng)
+      ) {
         continue;
       }
 
@@ -186,7 +196,18 @@ export function Globe({ globeConfig, data }: WorldProps) {
 
     // Filter valid data
     const validData = data.filter(
-      (d) => !isNaN(d.startLat) && !isNaN(d.startLng) && !isNaN(d.endLat) && !isNaN(d.endLng) && !isNaN(d.arcAlt),
+      (d) =>
+        d &&
+        typeof d.startLat === "number" &&
+        typeof d.startLng === "number" &&
+        typeof d.endLat === "number" &&
+        typeof d.endLng === "number" &&
+        typeof d.arcAlt === "number" &&
+        !isNaN(d.startLat) &&
+        !isNaN(d.startLng) &&
+        !isNaN(d.endLat) &&
+        !isNaN(d.endLng) &&
+        !isNaN(d.arcAlt),
     );
 
     globeRef.current
@@ -242,18 +263,23 @@ export function Globe({ globeConfig, data }: WorldProps) {
     if (!globeRef.current || !globeData) return;
 
     const interval = setInterval(() => {
-      if (!globeRef.current || !globeData) return;
+      if (!globeRef.current || !globeData || globeData.length === 0) return;
 
       // Validate globeData before using
       const validGlobeData = globeData.filter(
-        (d) => d && !isNaN(d.lat) && !isNaN(d.lng) && d.lat !== null && d.lng !== null,
+        (d) =>
+          d && typeof d.lat === "number" && typeof d.lng === "number" && !isNaN(d.lat) && !isNaN(d.lng) && d.lat !== null && d.lng !== null,
       );
 
       if (validGlobeData.length === 0) return;
 
-      numbersOfRings = genRandomNumbers(0, validGlobeData.length, Math.floor((validGlobeData.length * 4) / 5));
+      const count = Math.max(1, Math.floor((validGlobeData.length * 4) / 5));
+      numbersOfRings = genRandomNumbers(0, validGlobeData.length, count);
 
-      globeRef.current.ringsData(validGlobeData.filter((d, i) => numbersOfRings.includes(i)));
+      const ringData = validGlobeData.filter((d, i) => numbersOfRings.includes(i));
+      if (ringData.length > 0) {
+        globeRef.current.ringsData(ringData);
+      }
     }, 2000);
 
     return () => {
@@ -287,21 +313,23 @@ export default function World(props: WorldProps) {
   return (
     <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 180, 1800)}>
       <WebGLRendererConfig />
-      <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
-      <directionalLight color={globeConfig.directionalLeftLight} position={new Vector3(-400, 100, 400)} />
-      <directionalLight color={globeConfig.directionalTopLight} position={new Vector3(-200, 500, 200)} />
-      <pointLight color={globeConfig.pointLight} position={new Vector3(-200, 500, 200)} intensity={0.8} />
-      <Globe {...props} />
-      <OrbitControls
-        enablePan={false}
-        enableZoom={false}
-        minDistance={cameraZ}
-        maxDistance={cameraZ}
-        autoRotateSpeed={1}
-        autoRotate={true}
-        minPolarAngle={Math.PI / 3.5}
-        maxPolarAngle={Math.PI - Math.PI / 3}
-      />
+      <Suspense fallback={null}>
+        <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
+        <directionalLight color={globeConfig.directionalLeftLight} position={new Vector3(-400, 100, 400)} />
+        <directionalLight color={globeConfig.directionalTopLight} position={new Vector3(-200, 500, 200)} />
+        <pointLight color={globeConfig.pointLight} position={new Vector3(-200, 500, 200)} intensity={0.8} />
+        <Globe {...props} />
+        <OrbitControls
+          enablePan={false}
+          enableZoom={false}
+          minDistance={cameraZ}
+          maxDistance={cameraZ}
+          autoRotateSpeed={1}
+          autoRotate={true}
+          minPolarAngle={Math.PI / 3.5}
+          maxPolarAngle={Math.PI - Math.PI / 3}
+        />
+      </Suspense>
     </Canvas>
   );
 }
@@ -346,7 +374,7 @@ export function genRandomNumbers(min: number, max: number, count: number) {
 
   while (arr.length < count && attempts < maxAttempts) {
     const r = Math.floor(Math.random() * (max - min)) + min;
-    if (arr.indexOf(r) === -1) arr.push(r);
+    if (!isNaN(r) && arr.indexOf(r) === -1) arr.push(r);
     attempts++;
   }
 

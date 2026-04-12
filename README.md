@@ -6,7 +6,7 @@ live demo: ## Technologies Used https:https://sahibibadov.vercel.app/
 
 ##  Technologies Used
 
- - [Next Js 14](https://nextjs.org/)
+ - [Next.js 16](https://nextjs.org/)
  - Typescript
  - shadcn/ui
  - Tailwindcss

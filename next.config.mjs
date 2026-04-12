@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [{ protocol: "https", hostname: "wselbyikbotganmtktxi.supabase.co" }],
+   images: {
+    qualities: [50, 75, 100],
   },
   experimental: {
     staleTimes: {

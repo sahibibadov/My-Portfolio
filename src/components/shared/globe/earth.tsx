@@ -98,6 +98,7 @@ const sampleArcs = [
   },
 ];
 
+import { Suspense } from "react";
 const Earth = () => {
   const globeConfig = {
     pointSize: 4,
@@ -124,7 +125,9 @@ const Earth = () => {
 
   return (
     <div className="absolute inset-0 w-full h-full">
-      <World globeConfig={globeConfig} data={sampleArcs} />
+      <Suspense fallback={null}>
+        <World globeConfig={globeConfig} data={sampleArcs} />
+      </Suspense>
     </div>
   );
 };
