@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Github",
+    "href": "https://github.com/sahibibadov",
+    "icon": "IconoirGithub",
+    "target": "_blank"
+  },
+  {
+    "id": 2,
+    "name": "Linkedin",
+    "href": "https://www.linkedin.com/in/sahibibadov/",
+    "icon": "MdiLinkedin",
+    "target": "_blank"
+  },
+  {
+    "id": 3,
+    "name": "Instagram",
+    "href": "https://www.instagram.com/sahib_ibadoff/",
+    "icon": "MdiInstagram",
+    "target": "_blank"
+  },
+  {
+    "id": 4,
+    "name": "Email",
+    "href": "mailto:bdvshb@gmail.com",
+    "icon": "EpMessage",
+    "target": "_self"
+  }
+]
