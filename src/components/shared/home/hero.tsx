@@ -37,7 +37,7 @@ const Hero = () => {
       </FramerComponent>
       <FramerComponent blur="10px" delay={1} duration={0.6} direction="bottom" distance={50}>
         <Button variant="custom" asChild>
-          <a download href="/sahib-ios-cv.pdf">
+          <a download href="/ibadov-sahib-cv-ios.docx">
             Download CV
           </a>
         </Button>
