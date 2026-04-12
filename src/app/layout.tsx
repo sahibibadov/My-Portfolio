@@ -23,6 +23,7 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
 });
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sahibibadov.com"),
   title: {
     default: "Sahib Ibadov | Portfolio",
     template: "%s | Sahib Ibadov",

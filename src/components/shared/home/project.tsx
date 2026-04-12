@@ -1,3 +1,4 @@
+"use client";
 import { CardBody, CardContainer, CardItem } from "../3d-card";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,21 +37,22 @@ const Project = () => {
                     height="200"
                     width="200"
                     sizes="(max-width: 540px) 100vw, 33vw"
-                    loading="lazy"
+                    priority={i === 0}
+                    loading={i === 0 ? undefined : "lazy"}
                     className="aspect-video object-cover rounded-xl group-hover/card:shadow-xl w-full"
                     alt="thumbnail"
                   />
                 </CardItem>
                 <div className="flex justify-between items-center ~mt-2/3">
-                  <CardItem
-                    translateZ={20}
-                    as={Link}
-                    href={item.demoLink}
-                    target="__blank"
-                    className="~px-1/4 ~py-0/2 rounded-xl ~text-sm/base font-semibold border border-transparent hover:border-border text-foreground/45 flex items-center gap-2 transition-none "
-                  >
-                    Live Demo
-                    <LinkIcon className="size-3 md:size-4" />
+                  <CardItem translateZ={20}>
+                    <Link
+                      href={item.demoLink}
+                      target="__blank"
+                      className="~px-1/4 ~py-0/2 rounded-xl ~text-sm/base font-semibold border border-transparent hover:border-border text-foreground/45 flex items-center gap-2 transition-none"
+                    >
+                      Live Demo
+                      <LinkIcon className="size-3 md:size-4" />
+                    </Link>
                   </CardItem>
                   <CardItem translateZ={20}>
                     <Button asChild variant="outline" className="rounded-full size-8 md:size-10 p-0 bg-transparent">
