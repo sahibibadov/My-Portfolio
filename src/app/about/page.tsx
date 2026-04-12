@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 const About = () => {
   return (
-    <section className="~mt-10/20  w-full">
+    <section className="mt-10 md:mt-20  w-full">
       <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <SparklesPreview className="text-5xl md:text-6xl lg:text-7xl ">ABOUT</SparklesPreview>
       </FramerComponent>
@@ -24,7 +24,7 @@ const About = () => {
         duration={0.6}
         direction="bottom"
         distance={50}
-        className="~space-y-2/4 ~mt-4/8   *:text-center md:text-start text-foreground/75 ~text-sm/base"
+        className="space-y-2 md:space-y-4 mt-4 md:mt-8   *:text-center md:text-start text-foreground/75 text-sm md:text-base"
       >
         <p>
           Hello there! I&apos;m Sahib Ibadov, a passionate and result-oriented <strong>iOS Developer</strong> with
@@ -67,8 +67,8 @@ const About = () => {
         />
 
         {/* content */}
-        <div className="flex flex-2 flex-col sm:flex-row gap-5 text-foreground/55 text-start ~text-xs/base">
-          <ul className="~space-y-1/2">
+        <div className="flex flex-2 flex-col sm:flex-row gap-5 text-foreground/55 text-start text-xs md:text-base">
+          <ul className="space-y-1 md:space-y-2">
             <li className="flex items-center gap-2">
               <span className="relative flex size-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
@@ -98,7 +98,7 @@ const About = () => {
               Age: <Age birth="1998-04-10" />
             </li>
           </ul>
-          <ul className="~space-y-1/2">
+          <ul className="space-y-1 md:space-y-2">
             <li className="flex items-center gap-2">
               <span className="relative flex size-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>

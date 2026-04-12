@@ -62,7 +62,7 @@ const ContactForm = () => {
 
       <LabelInputContainer>
         <Label htmlFor="message">Message</Label>
-        <Textarea id="message" {...register("message")} placeholder="message" className="resize-y ~h-28/32" />
+        <Textarea id="message" {...register("message")} placeholder="message" className="resize-y h-28 md:h-32" />
         {errors.message && <p className="text-xs text-red-500">{errors.message.message}</p>}
       </LabelInputContainer>
 

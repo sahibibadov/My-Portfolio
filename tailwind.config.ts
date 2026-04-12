@@ -1,11 +1,5 @@
 import type { Config } from "tailwindcss";
-import {
-  fluidExtractor,
-  fluidCorePlugins,
-  defaultThemeScreensInRems,
-  defaultThemeFontSizeInRems,
-  type FluidConfig,
-} from "fluid-tailwind";
+
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenColorPalette");
@@ -14,15 +8,9 @@ const config = {
   darkMode: ["class"],
   content: {
     files: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
-    extract: fluidExtractor(),
   },
   prefix: "",
   theme: {
-    fluid: {
-      defaultScreens: ["40rem", "87.5rem"],
-    } satisfies FluidConfig,
-    fontSize: defaultThemeFontSizeInRems,
-    screens: defaultThemeScreensInRems,
     extend: {
       fontFamily: {
         sans: ["var(--font-geist-sans)"],
@@ -87,7 +75,7 @@ const config = {
       },
     },
   },
-  plugins: [fluidCorePlugins, require("tailwindcss-animate"), addVariablesForColors],
+  plugins: [require("tailwindcss-animate"), addVariablesForColors],
 } satisfies Config;
 
 function addVariablesForColors({ addBase, theme }: any) {

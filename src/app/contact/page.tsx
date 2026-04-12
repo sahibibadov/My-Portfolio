@@ -15,13 +15,13 @@ const Earth = dynamicNext(() => import("@/components/shared/globe/earth"), {
 });
 const Contact = () => {
   return (
-    <section className="~mt-10/16  w-full  ">
+    <section className="mt-10 md:mt-16  w-full  ">
       {/* title */}
       <FramerComponent blur="10px" delay={1} duration={0.6} direction="bottom" distance={50}>
         <SparklesPreview className="text-5xl md:text-6xl lg:text-7xl ">CONTACT ME</SparklesPreview>
       </FramerComponent>
 
-      <div className="flex flex-col md:flex-row gap-4 ~mt-8/20">
+      <div className="flex flex-col md:flex-row gap-4 mt-8 md:mt-20">
         {/* eratch */}
         <FramerComponent
           blur="10px"

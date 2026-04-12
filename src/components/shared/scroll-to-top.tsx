@@ -23,7 +23,7 @@ const ScrollToTop = () => {
       size="icon"
       onClick={scrollToTop}
       className={cn(
-        "fixed ~right-6/14 z-50 rounded-full  ~size-10/12 ~bottom-7/10  transition-all shadow-sm border-black/25 dark:border-border",
+        "fixed right-6 md:right-14 z-50 rounded-full  size-10 md:size-12 bottom-7 md:bottom-10  transition-all shadow-sm border-black/25 dark:border-border",
       )}
       aria-label="Scroll to top"
       initial={{ scale: 0, opacity: 0 }}
@@ -35,7 +35,7 @@ const ScrollToTop = () => {
       }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
     >
-      <ScrollTopIcon className="~size-6/8" />
+      <ScrollTopIcon className="size-6 md:size-8" />
       <span className="sr-only">Scroll to top</span>
     </AnimatedButton>
   );

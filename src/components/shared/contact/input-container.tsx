@@ -7,5 +7,5 @@ export const LabelInputContainer = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  return <div className={cn("flex flex-col ~space-y-1/2 w-full", className)}>{children}</div>;
+  return <div className={cn("flex flex-col space-y-1 md:space-y-2 w-full", className)}>{children}</div>;
 };
