@@ -1,6 +1,6 @@
 "use client";
 import React, { useId, useRef } from "react";
-import { AnimatePresence, motion, useInView, Variants } from "framer-motion";
+import { AnimatePresence, motion, useInView, Variants } from "motion/react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps } from "class-variance-authority";
 
@@ -58,7 +58,6 @@ export default function FramerComponent({
         duration,
         delay,
         damping: 10,
-        amping: 10,
         stiffness: 100,
         mass: 1,
       },

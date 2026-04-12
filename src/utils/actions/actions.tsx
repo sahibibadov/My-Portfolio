@@ -6,12 +6,12 @@ import { Resend } from "resend";
 
 // validation schema
 const formShema = z.object({
-  name: z.string().min(2, { message: "name must be at least 2 characters" }),
-  email: z.string().email({ message: "please enter a valid email" }),
+  name: z.string().min(2, { error: "name must be at least 2 characters" }),
+  email: z.string().email({ error: "please enter a valid email" }),
   message: z
     .string()
-    .min(2, { message: "message must be at least 2 characters" })
-    .max(500, { message: "message must be at most 500 characters" }),
+    .min(2, { error: "message must be at least 2 characters" })
+    .max(500, { error: "message must be at most 500 characters" }),
 });
 type FormData = z.infer<typeof formShema>;
 

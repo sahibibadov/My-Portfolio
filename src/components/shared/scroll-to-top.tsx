@@ -3,7 +3,7 @@
 import useValuePassedThreshold from "@/hook/useScrollPosition";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { ScrollTopIcon } from "../../../public/icon-static/scroll-top";
 
 const AnimatedButton = motion.create(Button);

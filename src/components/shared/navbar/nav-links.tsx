@@ -1,7 +1,7 @@
 "use client";
 import { navlinks } from "@/constants";
 import { Link } from "next-view-transitions";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
