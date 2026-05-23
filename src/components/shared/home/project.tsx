@@ -40,7 +40,7 @@ const Project = () => {
                     priority={i === 0}
                     loading={i === 0 ? undefined : "lazy"}
                     className="aspect-video object-cover rounded-xl group-hover/card:shadow-xl w-full"
-                    alt="thumbnail"
+                    alt={`${item.name} project screenshot`}
                   />
                 </CardItem>
                 <div className="flex justify-between items-center mt-2 md:mt-3">

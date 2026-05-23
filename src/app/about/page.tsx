@@ -4,15 +4,50 @@ import Resume from "@/components/shared/resume";
 import { Metadata } from "next";
 import Image from "next/image";
 import Age from "@/components/shared/about/age";
+import { JsonLd } from "@/components/shared/seo/json-ld";
+import { getProfilePageSchema, getBreadcrumbSchema } from "@/components/shared/seo/person-schema";
 
 export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn more about Sahib Ibadov, his background, and his experience in web development.",
+  description:
+    "About Sahib Ibadov — iOS Developer (Swift, SwiftUI, UIKit) and Frontend Developer (Next.js, React, TypeScript) based in Masalli, Azerbaijan.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    type: "website",
+    url: "/about",
+    siteName: "Sahib Ibadov Portfolio",
+    locale: "en_US",
+    title: "About Sahib Ibadov",
+    description:
+      "Background, education and work experience of Sahib Ibadov, iOS & Frontend Developer based in Azerbaijan.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Sahib Ibadov — iOS & Frontend Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Sahib Ibadov",
+    description:
+      "Background, education and work experience of Sahib Ibadov, iOS & Frontend Developer based in Azerbaijan.",
+    images: ["/twitter-image"],
+  },
 };
 const About = () => {
   return (
     <section className="mt-10 md:mt-20  w-full">
+      <JsonLd data={getProfilePageSchema()} />
+      <JsonLd
+        data={getBreadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ])}
+      />
       <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <SparklesPreview className="text-5xl md:text-6xl lg:text-7xl ">ABOUT</SparklesPreview>
       </FramerComponent>
@@ -58,7 +93,7 @@ const About = () => {
 
         <Image
           src="/images/user.png"
-          alt="user"
+          alt="Sahib Ibadov portrait"
           quality={100}
           width={300}
           height={300}
