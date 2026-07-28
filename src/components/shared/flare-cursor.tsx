@@ -1,168 +1,76 @@
 "use client";
 
-import { useEffect, useState, useCallback, useMemo, useId } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
-import { useMousePosition } from "@/hook/useMousePosition";
+import { useEffect, useRef } from "react";
+import { animate, motion, useMotionValue, useSpring } from "motion/react";
+import { useHasFinePointer } from "@/hooks/use-media-query";
+import { useMousePosition } from "@/hooks/use-mouse-position";
 
-const SPRING_CONFIG = { damping: 50, stiffness: 500 };
-const TARGET_ELEMENTS = new Set(["h1", "h2", "h3", "button", "a", "input", "label"]);
+const TRAIL_SPRING = { damping: 50, stiffness: 500, mass: 0.6 };
+const SCALE_TRANSITION = { duration: 0.2 };
 
-const FramerCursor = () => {
-  const [mounted, setMounted] = useState(false);
-  const [isPointer, setIsPointer] = useState(false);
-  const { x: mouseX, y: mouseY } = useMousePosition();
-  const id = useId();
+const INTERACTIVE_SELECTOR = "a,button,input,textarea,select,label,summary,h1,h2,h3,[data-cursor],[role='button']";
 
-  const cursorX = useMotionValue(0);
-  const cursorY = useMotionValue(0);
+const RING_SCALE = { idle: 1, hover: 2.5 };
+const DOT_SCALE = { idle: 1, hover: 0.6 };
 
-  const cursorXSpring = useSpring(cursorX, SPRING_CONFIG);
-  const cursorYSpring = useSpring(cursorY, SPRING_CONFIG);
+const FlareCursor = () => {
+  const hasFinePointer = useHasFinePointer();
+  const { x, y, visible } = useMousePosition(hasFinePointer);
 
-  // Mount kontrolü
-  useEffect(() => {
-    setMounted(true);
-    cursorX.set(window.innerWidth / 2);
-    cursorY.set(window.innerHeight / 2);
-  }, [cursorX, cursorY]);
-
-  const checkPointerState = useCallback((x: number, y: number) => {
-    const elements = document.elementsFromPoint(x, y);
-    return elements.some(
-      (element) => TARGET_ELEMENTS.has(element.tagName.toLowerCase()) || element.hasAttribute("data-cursor"),
-    );
-  }, []);
+  const trailX = useSpring(x, TRAIL_SPRING);
+  const trailY = useSpring(y, TRAIL_SPRING);
+  const ringScale = useMotionValue(RING_SCALE.idle);
+  const dotScale = useMotionValue(DOT_SCALE.idle);
+  const isHovering = useRef(false);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!hasFinePointer) return;
 
-    let frameId: number;
-
-    const updateCursor = () => {
-      cursorX.set(mouseX);
-      cursorY.set(mouseY);
-      setIsPointer(checkPointerState(mouseX, mouseY));
-      frameId = requestAnimationFrame(updateCursor);
+    // Start the trailing ring wherever the pointer already is, otherwise it
+    // springs in from the top-left corner on the very first move.
+    const placeRing = (event: PointerEvent) => {
+      trailX.jump(event.clientX);
+      trailY.jump(event.clientY);
     };
 
-    frameId = requestAnimationFrame(updateCursor);
-    return () => cancelAnimationFrame(frameId);
-  }, [cursorX, cursorY, mouseX, mouseY, checkPointerState, mounted]);
+    // `pointerover` only fires when the pointer crosses into a different
+    // element, so hover detection costs nothing while the mouse just travels.
+    // The old implementation ran `document.elementsFromPoint` every frame.
+    const detectHover = (event: PointerEvent) => {
+      const target = event.target;
+      const hovering = target instanceof Element && target.closest(INTERACTIVE_SELECTOR) !== null;
+      if (hovering === isHovering.current) return;
 
-  const variants = useMemo(
-    () => ({
-      outer: {
-        normal: {
-          scale: 1,
-          transition: { duration: 0.2 },
-        },
-        pointer: {
-          scale: 2.5,
-          transition: { duration: 0.2 },
-        },
-      },
-      inner: {
-        normal: {
-          scale: 1,
-          transition: { duration: 0.2 },
-        },
-        pointer: {
-          scale: 0.6,
-          transition: { duration: 0.2 },
-        },
-      },
-    }),
-    [],
-  );
+      isHovering.current = hovering;
+      animate(ringScale, hovering ? RING_SCALE.hover : RING_SCALE.idle, SCALE_TRANSITION);
+      animate(dotScale, hovering ? DOT_SCALE.hover : DOT_SCALE.idle, SCALE_TRANSITION);
+    };
 
-  const outerCursorStyle = useMemo(
-    () => ({
-      translateX: cursorXSpring,
-      translateY: cursorYSpring,
-      willChange: "transform",
-    }),
-    [cursorXSpring, cursorYSpring],
-  );
+    window.addEventListener("pointermove", placeRing, { passive: true, once: true });
+    document.addEventListener("pointerover", detectHover, { passive: true });
 
-  const innerCursorStyle = useMemo(
-    () => ({
-      translateX: mouseX,
-      translateY: mouseY,
-      willChange: "transform",
-    }),
-    [mouseX, mouseY],
-  );
+    return () => {
+      window.removeEventListener("pointermove", placeRing);
+      document.removeEventListener("pointerover", detectHover);
+    };
+  }, [hasFinePointer, trailX, trailY, ringScale, dotScale]);
 
-  // Client-side mounting kontrolü
-  if (!mounted) return null;
+  if (!hasFinePointer) return null;
 
   return (
-    <div className="hidden sm:block">
-      <AnimatePresence mode="sync">
-        <motion.div
-          key={`outer-${id}`}
-          className="size-14 -top-7 -left-7 rounded-full border select-none pointer-events-none border-foreground/30 fixed z-[99999]"
-          initial="normal"
-          animate={isPointer ? "pointer" : "normal"}
-          variants={variants.outer}
-          style={outerCursorStyle}
-        />
-        <motion.div
-          key={`inner-${id}`}
-          className="mix-blend-difference size-4 -top-2 -left-2 select-none pointer-events-none rounded-full bg-white fixed z-[99999]"
-          variants={variants.inner}
-          initial="normal"
-          animate={isPointer ? "pointer" : "normal"}
-          style={innerCursorStyle}
-        />
-      </AnimatePresence>
-    </div>
+    <>
+      <motion.div
+        aria-hidden
+        className="fixed -left-7 -top-7 z-[99999] size-14 rounded-full border border-foreground/30 pointer-events-none select-none"
+        style={{ x: trailX, y: trailY, scale: ringScale, opacity: visible, willChange: "transform" }}
+      />
+      <motion.div
+        aria-hidden
+        className="fixed -left-2 -top-2 z-[99999] size-4 rounded-full bg-white mix-blend-difference pointer-events-none select-none"
+        style={{ x, y, scale: dotScale, opacity: visible, willChange: "transform" }}
+      />
+    </>
   );
 };
 
-export default FramerCursor;
-/*"use client";
-
-import { cn } from "@/lib/utils";
-import { useState, useEffect, useCallback, useMemo } from "react";
-
-const FramerCursor = () => {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
-  const [isPointer, setIsPointer] = useState(false);
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    const target = e.target as Element;
-    const isTargetPointer = window.getComputedStyle(target).cursor === "pointer";
-    
-    setPosition({ x: e.clientX, y: e.clientY });
-    setIsPointer(isTargetPointer);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [handleMouseMove]);
-
-  const flareSize = isPointer ? 0 : 40;
-
-  const cursorStyle = useMemo(() => ({
-    left: `${position.x}px`,
-    top: `${position.y}px`,
-    width: `${flareSize}px`,
-    height: `${flareSize}px`,
-    ...(isPointer ? { opacity: 0, pointerEvents: 'none' as const } : {}),
-  }), [position.x, position.y, flareSize, isPointer]);
-
-  const cursorClassName = cn(
-    "fixed border-2 z-[100] border-black/10 dark:border-white/10 bg-transparent rounded-full mix-blend-normal pointer-events-none -translate-x-1/2 -translate-y-1/2 backdrop-filter backdrop-blur-[2px]  hidden md:block"
-  );
-
-  return (
-    <div
-      className={cursorClassName}
-      style={cursorStyle}
-    />
-  );
-};
-
-export default FramerCursor;*/
+export default FlareCursor;

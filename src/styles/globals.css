@@ -35,9 +35,15 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
+  /* Softer corners across the app. Every step is derived from --radius so the
+     scale stays monotonic — xl/2xl/3xl have to be redefined too, otherwise
+     Tailwind's defaults (12/16/24px) would end up smaller than our lg. */
   --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 20px);
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -54,7 +60,6 @@
 
 @layer base {
   :root {
-    /* --background: 0 0% 100%;\ */
     --background: 0, 0%, 94%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -74,7 +79,7 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -110,7 +115,14 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground  cursor-none;
+    @apply bg-background text-foreground;
+  }
+  /* FlareCursor draws the visible cursor, but it only mounts where a real cursor
+     exists. Anywhere else the native cursor has to stay. */
+  @media (hover: hover) and (pointer: fine) {
+    body {
+      @apply cursor-none;
+    }
   }
   ::-webkit-scrollbar {
     @apply w-2;

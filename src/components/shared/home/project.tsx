@@ -9,14 +9,13 @@ import FramerComponent from "../motion-element/framer-component";
 import projects from "@/data/projects.json";
 
 const Project = () => {
-  const porject = projects;
   return (
     <section className="mt-10 md:mt-20 text-center w-full">
       <FramerComponent blur="10px" delay={0.4} duration={0.6} direction="bottom" distance={50}>
         <h2 className="heading">PROJECT</h2>
       </FramerComponent>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {porject?.map((item, i) => (
+        {projects.map((item, i) => (
           <FramerComponent
             blur="10px"
             key={i}
@@ -27,7 +26,7 @@ const Project = () => {
             distance={30}
           >
             <CardContainer className="inter-var w-full max-w-full ">
-              <CardBody className=" relative group/card transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background border-black/15 dark:border-border rounded-xl p-3 border">
+              <CardBody className=" relative group/card transition-all hover:shadow-2xl hover:shadow-netral-500/10 dark:hover:shadow-neutral-500/10 bg-background border-black/15 dark:border-border rounded-2xl p-3 border">
                 <CardItem>
                   <h3 className="text-base md:text-xl font-semibold text-foreground/45">{item.name}</h3>
                 </CardItem>
