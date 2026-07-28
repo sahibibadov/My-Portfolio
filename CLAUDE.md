@@ -11,8 +11,12 @@ pnpm install        # install deps
 pnpm dev            # next dev (Turbopack-capable via Next 16)
 pnpm build          # next build (production)
 pnpm start          # next start (serve the production build)
-pnpm lint           # next lint (next/core-web-vitals only)
+pnpm lint           # eslint . (flat config, next/core-web-vitals only)
 ```
+
+Next 16 removed the `next lint` command and ESLint 10 dropped `.eslintrc.json`, so lint
+runs through the eslint CLI against `eslint.config.mjs`. ESLint is pinned to `^9`
+because the whole `eslint-config-next` plugin chain still declares `eslint <= 9`.
 
 No test runner is configured.
 
@@ -45,8 +49,6 @@ No test runner is configured.
 
 `@/*` → `./src/*` (`tsconfig.json`). Always import via `@/...`.
 
-Note: `tsconfig.json` `include` still lists `src/components/shared/scene.jsx` and `model.jsx`, which no longer exist. Harmless but stale.
-
 ### App Router layout (`src/app/layout.tsx`)
 
 The root layout composes a fixed provider/widget tree around every page; do not rip these out lightly:
@@ -54,16 +56,21 @@ The root layout composes a fixed provider/widget tree around every page; do not 
 ```
 ViewTransitions
   └── ThemeProvider (next-themes, defaultTheme="dark")
-        └── SmoothScroll (Lenis)
-              ├── BackgroundParticle (canvas stars)
-              ├── FlareCursor          ← see "Custom cursor" below
-              ├── Toaster (sonner)
-              ├── Header (sticky, backdrop-blurs on scroll past 80px)
-              │     └── Navbar
-              ├── Container { children }
-              ├── Footer
-              └── ScrollToTop
+        └── MotionProvider (MotionConfig reducedMotion="user")
+              └── SmoothScroll (Lenis)
+                    ├── BackgroundParticle (canvas stars)
+                    ├── FlareCursor          ← see "Custom cursor" below
+                    ├── Toaster (sonner)
+                    ├── Header (sticky, backdrop-blurs on scroll past 80px)
+                    │     └── Navbar
+                    ├── Container { children }
+                    ├── Footer
+                    └── ScrollToTop
 ```
+
+`MotionProvider` sets `reducedMotion="user"` once for the whole tree, so individual
+components never have to check `prefers-reduced-motion` themselves. `SmoothScroll`
+checks it separately to hand the wheel back to the browser instead of interpolating.
 
 Layout also sets `export const fetchCache = "force-cache"`; `src/app/page.tsx` adds `export const dynamic = "force-static"`. The site is essentially fully static — there is no API surface beyond the single Resend server action.
 
@@ -76,8 +83,9 @@ Layout also sets `export const fetchCache = "force-cache"`; `src/app/page.tsx` a
 
 ### Component layout
 
-- `src/components/ui/`     — shadcn primitives only (Button, Input, Label, Textarea, Sheet, Tooltip, Sonner). Add new shadcn primitives here.
+- `src/components/ui/`     — shadcn primitives only (Button, Input, Label, Textarea, Sheet, Sonner). Add new shadcn primitives here.
 - `src/components/shared/` — feature/composite components, grouped per section (`home/`, `about/`, `contact/`, `navbar/`, `footer/`, `globe/`, `particle/`, `motion-element/`). Add page-level pieces here, not under `ui/`.
+- `src/hooks/`             — kebab-case files, one hook family per file (`use-media-query.ts`, `use-mouse-position.ts`, `use-scroll-threshold.ts`).
 
 ### Styling — Tailwind v4 (no `tailwind.config.ts`)
 
@@ -91,14 +99,30 @@ Layout also sets `export const fetchCache = "force-cache"`; `src/app/page.tsx` a
 
 `components.json` still points `tailwind.config` at `tailwind.config.ts`, which does not exist. If you run `npx shadcn add ...` and it complains, that mismatch is why — either create a stub config or generate components manually. Do not add a v3-style config without coordinating with the v4 theme block.
 
+### Hooks
+
+- `useMediaQuery(query)` — `useSyncExternalStore` over `matchMedia`; returns `false` on the server and the first client render so hydration stays stable. `usePrefersReducedMotion()` and `useHasFinePointer()` are thin wrappers.
+- `useMousePosition(enabled)` — returns `{ x, y, visible }` as **motion values**, not React state. Bind them straight to a `style` prop; moving the mouse must never cost a render.
+- `useScrollThreshold(threshold)` — boolean, rAF-coalesced. Only holds the boolean, so scrolling re-renders the consumer just when it crosses the threshold.
+
 ### Custom cursor
 
-`globals.css` applies `cursor-none` to `body`. The visible cursor is drawn by `FlareCursor` (`src/components/shared/flare-cursor.tsx`) and depends on `useMousePosition` (`src/hook/useMousePosition.tsx`, note **singular** folder name `hook/`). If you remove or stub `FlareCursor`, also drop `cursor-none` or the site appears cursorless.
+`globals.css` applies `cursor-none` to `body` **inside `@media (hover: hover) and (pointer: fine)`**, matching the guard in `FlareCursor` (`src/components/shared/flare-cursor.tsx`) — it returns `null` where there is no real cursor. Keep those two conditions in sync, or the site ends up cursorless on some device.
 
-### Animations — two coexisting systems
+Hover state comes from a delegated `pointerover` listener (`event.target.closest(...)`), never from a per-frame `elementsFromPoint` hit test. Position and scale are driven entirely through motion values, so the component renders once.
 
-1. **Variant presets** in `src/lib/motion.tsx` (`textVariant`, `fadeIn`, `slideIn`, `zoomIn`, `staggerContainer`). Plain motion variant factories.
-2. **`FramerComponent`** in `src/components/shared/motion-element/framer-component.tsx` — the preferred wrapper for scroll-triggered reveals. Wraps children in `motion.div` (or `Slot` via `asChild`), uses `useInView`, accepts `direction | delay | duration | distance | blur | once`. Use this for new section reveals.
+### Animations
+
+**`FramerComponent`** (`src/components/shared/motion-element/framer-component.tsx`) is the wrapper for scroll-triggered reveals. Wraps children in `motion.div` (or `Slot` via `asChild`), drives the reveal with `whileInView` — no React render on entering view — and accepts `direction | delay | duration | distance | blur | once | inViewMargin | asChild`.
+
+Two rules worth keeping:
+
+- `blur` defaults to `"0px"` and the `filter` key is omitted entirely at that value. `filter: blur(0px)` is not free — it still promotes the element to its own filter layer.
+- For a **grid** of reveals, do not mount one `FramerComponent` per item. Put `variants` + `whileInView` on the container with `staggerChildren` and give each child the variants (see `home/skills.tsx` + `home/skill-card.tsx`). One IntersectionObserver instead of N, and never animate `filter` across dozens of siblings at once.
+
+### Pointer glow
+
+`GlowingEffect` (`src/components/shared/glowing-effect.tsx`) is a pure presentation shell; all pointer maths lives in `src/lib/pointer-glow.ts`. That module keeps **one** `pointermove`/`scroll`/`resize` listener for every mounted instance and runs a single rAF that measures every registered element before writing any style — so a frame costs one layout flush regardless of how many cards are on screen, and only cards the pointer is near touch the DOM. Mount as many as you like; never give an instance its own listener.
 
 ### 3D Earth (Contact page)
 

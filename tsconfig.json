@@ -33,9 +33,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/provider/animated-provider",
-    "src/components/shared/scene.jsx",
-    "src/components/shared/model.jsx",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [

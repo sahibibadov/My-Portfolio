@@ -1,23 +1,24 @@
 "use client";
-import React, { useId, useRef } from "react";
-import { AnimatePresence, motion, useInView, Variants } from "motion/react";
-import { Slot } from "@radix-ui/react-slot";
-import { VariantProps } from "class-variance-authority";
 
-interface AnimatedRevealProps extends VariantProps<typeof motion.div> {
-  children: React.ReactNode;
+import { useMemo, type ReactNode } from "react";
+import { motion, type Variants } from "motion/react";
+import { Slot } from "@radix-ui/react-slot";
+
+// Hoisted: building this inside render produced a brand new component type on
+// every pass, which remounted the whole `asChild` subtree each time.
+const MotionSlot = motion.create(Slot);
+
+interface FramerComponentProps {
+  children: ReactNode;
   className?: string;
-  direction?: "right" | "bottom" | "left" | "top";
+  direction?: "top" | "bottom" | "left" | "right";
   delay?: number;
   duration?: number;
   distance?: number;
   once?: boolean;
   inViewMargin?: number;
+  /** CSS length for the reveal blur. Leave at "0px" to skip the filter entirely. */
   blur?: string;
-  enterAnimation?: string;
-  exitAnimation?: string;
-  variant?: Variants;
-  layout?: boolean;
   asChild?: boolean;
 }
 
@@ -31,55 +32,56 @@ export default function FramerComponent({
   once = true,
   inViewMargin = -50,
   blur = "0px",
-  enterAnimation = "visible",
-  exitAnimation = "hidden",
-  variant,
-  layout = false,
   asChild = false,
   ...props
-}: AnimatedRevealProps) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once, margin: `${inViewMargin}px` });
-  const id = useId();
-  const defaultVariants: Variants = {
-    hidden: {
-      translateX: direction === "left" ? -distance : direction === "right" ? distance : 0,
-      translateY: direction === "top" ? -distance : direction === "bottom" ? distance : 0,
-      opacity: 0,
-      filter: `blur(${blur})`,
-    },
-    visible: {
-      translateX: 0,
-      translateY: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: {
-        type: "spring",
-        duration,
-        delay,
-        damping: 10,
-        stiffness: 100,
-        mass: 1,
+}: FramerComponentProps) {
+  const variants = useMemo<Variants>(() => {
+    // `filter: blur(0px)` is not free — it still promotes the element to its own
+    // filter layer. Only animate the filter when there is a blur to animate.
+    const shouldBlur = parseFloat(blur) > 0;
+
+    return {
+      hidden: {
+        x: direction === "left" ? -distance : direction === "right" ? distance : 0,
+        y: direction === "top" ? -distance : direction === "bottom" ? distance : 0,
+        opacity: 0,
+        ...(shouldBlur && { filter: `blur(${blur})` }),
       },
-    },
-  };
+      visible: {
+        x: 0,
+        y: 0,
+        opacity: 1,
+        ...(shouldBlur && { filter: "blur(0px)" }),
+        transition: {
+          type: "spring",
+          duration,
+          delay,
+          damping: 10,
+          stiffness: 100,
+          mass: 1,
+        },
+      },
+    };
+  }, [direction, distance, blur, duration, delay]);
 
-  const combinedVariants = variant ? variant : defaultVariants;
+  const viewport = useMemo(() => ({ once, margin: `${inViewMargin}px` }), [once, inViewMargin]);
 
-  const animationProps = {
-    initial: exitAnimation,
-    animate: inView ? enterAnimation : exitAnimation,
-    exit: exitAnimation,
-    layout: layout,
-  };
+  const Component = asChild ? MotionSlot : motion.div;
 
-  const Component = asChild ? motion.create(Slot) : motion.div;
-
+  // `whileInView` drives the animation from Motion's own IntersectionObserver,
+  // so entering the viewport no longer costs a React render. The previous
+  // `AnimatePresence` wrapper had nothing to animate out — its child never
+  // unmounted — so it only added overhead.
   return (
-    <AnimatePresence key={id}>
-      <Component {...props} ref={ref} className={className} variants={combinedVariants} {...animationProps}>
-        {children}
-      </Component>
-    </AnimatePresence>
+    <Component
+      {...props}
+      className={className}
+      variants={variants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewport}
+    >
+      {children}
+    </Component>
   );
 }

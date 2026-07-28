@@ -10,6 +10,7 @@ import Footer from "@/components/shared/footer/footer";
 import { BackgroundParticle } from "@/components/shared/particle/bg-particle";
 import ScrollToTop from "@/components/shared/scroll-to-top";
 import SmoothScroll from "@/provider/smooth-scroll-provider";
+import MotionProvider from "@/provider/motion-provider";
 import FlareCursor from "@/components/shared/flare-cursor";
 import { Toaster } from "@/components/ui/sonner";
 import Container from "@/components/shared/container";
@@ -190,17 +191,19 @@ export default function RootLayout({
           <JsonLd data={getPersonSchema()} />
           <JsonLd data={getWebSiteSchema()} />
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-            <SmoothScroll>
-              <BackgroundParticle />
-              <FlareCursor />
-              <Toaster position="top-right" closeButton richColors />
-              <Header>
-                <Navbar />
-              </Header>
-              <Container className="flex-1 flex flex-col">{children}</Container>
-              <Footer />
-              <ScrollToTop />
-            </SmoothScroll>
+            <MotionProvider>
+              <SmoothScroll>
+                <BackgroundParticle />
+                <FlareCursor />
+                <Toaster position="top-right" closeButton richColors />
+                <Header>
+                  <Navbar />
+                </Header>
+                <Container className="flex-1 flex flex-col">{children}</Container>
+                <Footer />
+                <ScrollToTop />
+              </SmoothScroll>
+            </MotionProvider>
           </ThemeProvider>
         </body>
       </html>
