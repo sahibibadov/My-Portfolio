@@ -4,25 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-Package manager: **pnpm** (pnpm-lock.yaml present).
+Package manager: **pnpm** (pnpm-lock.yaml present). Node is pinned to `22.x` via `engines`.
 
 ```bash
 pnpm install        # install deps
-pnpm dev            # next dev (Turbopack-capable via Next 16)
+pnpm dev            # next dev
 pnpm build          # next build (production)
 pnpm start          # next start (serve the production build)
 pnpm lint           # eslint . (flat config, next/core-web-vitals only)
 ```
 
-Next 16 removed the `next lint` command and ESLint 10 dropped `.eslintrc.json`, so lint
-runs through the eslint CLI against `eslint.config.mjs`. ESLint is pinned to `^9`
-because the whole `eslint-config-next` plugin chain still declares `eslint <= 9`.
+Next 16 removed the `next lint` command, so lint runs through the eslint CLI against
+`eslint.config.mjs` (flat config). ESLint is pinned to `^9` because the whole
+`eslint-config-next` plugin chain still declares `eslint <= 9`.
 
 No test runner is configured.
 
 ## Required env
 
-`.env.example` lists Supabase vars, but no Supabase code exists. The only env actually consumed is:
+`.env.example` lists Supabase vars, but no Supabase code exists — they are leftovers. The only env actually consumed is:
 
 - `RESEND_API_KEY` — read by the `sendEmail` server action in `src/utils/actions/actions.tsx`. The contact form silently fails without it.
 
@@ -31,17 +31,16 @@ No test runner is configured.
 ## Stack
 
 - Next.js 16 App Router + React 19 + TypeScript 6 (strict)
-- Tailwind CSS **v4** (PostCSS plugin `@tailwindcss/postcss`)
+- Tailwind CSS **v4** (PostCSS plugin `@tailwindcss/postcss`; no `tailwind.config.*` — see Styling)
 - shadcn/ui (style: `new-york`, base color: `slate`, RSC, no prefix) — see `components.json`
 - Motion v12 (`motion/react`) for animation
 - Lenis (`lenis/react`) for smooth scroll
 - `next-view-transitions` for cross-route view transitions
 - `next-themes` for dark mode (default theme: dark, `attribute="class"`)
 - three / @react-three/fiber / @react-three/drei / three-globe for the 3D Earth in `/contact`
-- react-hook-form + zod + @hookform/resolvers for forms
-- Resend for transactional email
-- sonner for toasts
-- Geist Sans / Geist Mono loaded locally from `src/app/font/`
+- react-hook-form + **zod v4** (error messages use the v4 `{ error: "..." }` param style) + @hookform/resolvers
+- Resend for transactional email, sonner for toasts
+- Geist Sans / Geist Mono loaded locally via `next/font/local` from `src/app/font/`
 
 ## Architecture
 
@@ -55,37 +54,46 @@ The root layout composes a fixed provider/widget tree around every page; do not 
 
 ```
 ViewTransitions
-  └── ThemeProvider (next-themes, defaultTheme="dark")
-        └── MotionProvider (MotionConfig reducedMotion="user")
-              └── SmoothScroll (Lenis)
-                    ├── BackgroundParticle (canvas stars)
-                    ├── FlareCursor          ← see "Custom cursor" below
-                    ├── Toaster (sonner)
-                    ├── Header (sticky, backdrop-blurs on scroll past 80px)
-                    │     └── Navbar
-                    ├── Container { children }
-                    ├── Footer
-                    └── ScrollToTop
+  └── html > body
+        ├── JsonLd (Person) + JsonLd (WebSite)   ← structured data, see "SEO layer"
+        └── ThemeProvider (next-themes, defaultTheme="dark")
+              └── MotionProvider (MotionConfig reducedMotion="user")
+                    └── SmoothScroll (Lenis)
+                          ├── BackgroundParticle (canvas stars)
+                          ├── FlareCursor          ← see "Custom cursor"
+                          ├── Toaster (sonner)
+                          ├── Header (sticky, backdrop-blurs past useScrollThreshold(80))
+                          │     └── Navbar
+                          ├── Container { children }
+                          ├── Footer
+                          └── ScrollToTop (appears past useScrollThreshold(150))
 ```
 
-`MotionProvider` sets `reducedMotion="user"` once for the whole tree, so individual
-components never have to check `prefers-reduced-motion` themselves. `SmoothScroll`
-checks it separately to hand the wheel back to the browser instead of interpolating.
+The three providers live in `src/provider/` (`theme-provider.tsx`, `motion-provider.tsx`, `smooth-scroll-provider.tsx`). `MotionProvider` sets `reducedMotion="user"` once for the whole tree, so individual components never check `prefers-reduced-motion` themselves. `SmoothScroll` checks it separately (via `usePrefersReducedMotion`) to hand the wheel back to the browser instead of interpolating; its Lenis options are module-level constants because Lenis rebuilds whenever the options object changes identity.
 
-Layout also sets `export const fetchCache = "force-cache"`; `src/app/page.tsx` adds `export const dynamic = "force-static"`. The site is essentially fully static — there is no API surface beyond the single Resend server action.
+Layout sets `export const fetchCache = "force-cache"`; `/` and `/about` add `export const dynamic = "force-static"`. The site is essentially fully static — there is no API surface beyond the single Resend server action.
 
 ### Routes
 
-- `/`            (`src/app/page.tsx`)  — Hero, Resume, Skills, Project sections
-- `/about`       (`src/app/about/page.tsx`)
-- `/contact`     (`src/app/contact/page.tsx` + nested `layout.tsx`)
-- `manifest.ts`, `sitemap.ts`, `robots.ts` — file-based metadata routes
+- `/`        (`src/app/page.tsx`) — Hero, Resume, Skills, Project sections
+- `/about`   (`src/app/about/page.tsx`) — own `metadata` + ProfilePage/breadcrumb JSON-LD in the page itself
+- `/contact` (`src/app/contact/page.tsx` + nested `layout.tsx`) — the **layout** holds `metadata` + ContactPage/breadcrumb JSON-LD because the page is a client component (it dynamically imports the Earth)
+- `error.tsx`, `loading.tsx`, `not-found.tsx` at the app root
+- File-based metadata routes: `manifest.ts`, `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, `twitter-image.tsx` (both images render via `ImageResponse`, `runtime = "nodejs"`)
+
+### SEO layer
+
+- `src/components/shared/seo/json-ld.tsx` — `<JsonLd data={...} />` renders a `<script type="application/ld+json">` and escapes `<`, `>`, `&` so payloads can't break out of the tag.
+- `src/components/shared/seo/person-schema.ts` — builders for Person, WebSite, ProfilePage, ContactPage and BreadcrumbList schemas. `sameAs` is derived from `src/data/socials.json` (http(s) links only), so editing socials also changes structured data.
+- The canonical origin `https://sahibibadov.com` is hardcoded in **four places**: `layout.tsx` (`metadataBase`), `person-schema.ts`, `sitemap.ts`, `robots.ts`. If the domain changes, change all four.
+- Adding a route means: entry in `sitemap.ts`, a `metadata` export (titles fill the `%s | Sahib Ibadov` template), and page-type + breadcrumb JSON-LD following the `/about` or `/contact` pattern.
 
 ### Component layout
 
-- `src/components/ui/`     — shadcn primitives only (Button, Input, Label, Textarea, Sheet, Sonner). Add new shadcn primitives here.
-- `src/components/shared/` — feature/composite components, grouped per section (`home/`, `about/`, `contact/`, `navbar/`, `footer/`, `globe/`, `particle/`, `motion-element/`). Add page-level pieces here, not under `ui/`.
-- `src/hooks/`             — kebab-case files, one hook family per file (`use-media-query.ts`, `use-mouse-position.ts`, `use-scroll-threshold.ts`).
+- `src/components/ui/`     — shadcn primitives only (Button, Input, Label, Textarea, Sheet, Sonner). Button carries an extra non-stock `custom` variant. Add new shadcn primitives here.
+- `src/components/shared/` — feature/composite components, grouped per section (`home/`, `about/`, `contact/`, `navbar/`, `footer/`, `globe/`, `particle/`, `motion-element/`, `seo/`). Add page-level pieces here, not under `ui/`.
+- `src/hooks/`             — kebab-case files, one hook family per file.
+- Two filenames contain load-bearing typos that imports depend on: the contact form is `contact-from.tsx` and the hero morph text is `gooey-text-morping.tsx`. Renaming them means updating every import.
 
 ### Styling — Tailwind v4 (no `tailwind.config.ts`)
 
@@ -93,23 +101,24 @@ Layout also sets `export const fetchCache = "force-cache"`; `src/app/page.tsx` a
 
 - `@import "tailwindcss"; @plugin "tailwindcss-animate";`
 - `@custom-variant dark (&:is(.dark *));` — dark mode is class-driven via `next-themes`
-- `@theme { ... }` block maps CSS vars (`--background`, `--primary`, etc.) to Tailwind color tokens
+- `@theme { ... }` maps CSS vars (`--background`, `--primary`, …) to Tailwind color tokens and redefines the whole radius scale off `--radius` (xl/2xl/3xl included, so the scale stays monotonic)
 - `:root` + `.dark` selectors hold the actual HSL values
 - A `.heading` component class and Lenis (`.lenis.*`) utility rules live here
+- `body` uses `font-mono` (Geist Mono) by default; `.heading` switches to `font-sans`
 
-`components.json` still points `tailwind.config` at `tailwind.config.ts`, which does not exist. If you run `npx shadcn add ...` and it complains, that mismatch is why — either create a stub config or generate components manually. Do not add a v3-style config without coordinating with the v4 theme block.
+`components.json` is stale on two counts: it points `tailwind.config` at a `tailwind.config.ts` that does not exist, and `tailwind.css` at `src/app/globals.css` while the real file is `src/styles/globals.css`. If `npx shadcn add ...` misbehaves, that is why — generate components manually or fix the paths deliberately. Do not add a v3-style config without coordinating with the v4 `@theme` block.
 
 ### Hooks
 
-- `useMediaQuery(query)` — `useSyncExternalStore` over `matchMedia`; returns `false` on the server and the first client render so hydration stays stable. `usePrefersReducedMotion()` and `useHasFinePointer()` are thin wrappers.
+- `useMediaQuery(query)` — `useSyncExternalStore` over a module-level cache of `matchMedia` lists; returns `false` on the server and the first client render so hydration stays stable. `usePrefersReducedMotion()` and `useHasFinePointer()` are thin wrappers.
 - `useMousePosition(enabled)` — returns `{ x, y, visible }` as **motion values**, not React state. Bind them straight to a `style` prop; moving the mouse must never cost a render.
 - `useScrollThreshold(threshold)` — boolean, rAF-coalesced. Only holds the boolean, so scrolling re-renders the consumer just when it crosses the threshold.
 
 ### Custom cursor
 
-`globals.css` applies `cursor-none` to `body` **inside `@media (hover: hover) and (pointer: fine)`**, matching the guard in `FlareCursor` (`src/components/shared/flare-cursor.tsx`) — it returns `null` where there is no real cursor. Keep those two conditions in sync, or the site ends up cursorless on some device.
+`globals.css` applies `cursor-none` to `body` **inside `@media (hover: hover) and (pointer: fine)`**, matching the `useHasFinePointer` guard in `FlareCursor` (`src/components/shared/flare-cursor.tsx`) — it returns `null` where there is no real cursor. Keep those two conditions in sync, or the site ends up cursorless on some device.
 
-Hover state comes from a delegated `pointerover` listener (`event.target.closest(...)`), never from a per-frame `elementsFromPoint` hit test. Position and scale are driven entirely through motion values, so the component renders once.
+Hover state comes from a delegated `pointerover` listener (`event.target.closest(INTERACTIVE_SELECTOR)`), never from a per-frame `elementsFromPoint` hit test. Position and scale are driven entirely through motion values, so the component renders once.
 
 ### Animations
 
@@ -126,7 +135,9 @@ Two rules worth keeping:
 
 ### 3D Earth (Contact page)
 
-`src/components/shared/globe/earth.tsx` dynamically imports `./globe` with `{ ssr: false }`. The `/contact` page also dynamically imports `earth` with `ssr: false` and a `LoadingIcon` fallback. Anything touching `three` must remain client-only — never import it from a server component.
+`src/components/shared/globe/earth.tsx` dynamically imports `./globe` with `{ ssr: false }`; the `/contact` page dynamically imports `earth` the same way with a `LoadingIcon` fallback. Anything touching `three` must remain client-only — never import it from a server component.
+
+**Known quirk — leave it unless you can visually verify:** `startAnimation` in `globe.tsx` feeds the *arc* records (`startLat`/`endLng`/… shaped) into `.pointsData(...)`, so the points layer reads `lat`/`lng` fields that don't exist and the console logs NaN warnings. The "obvious" fix (passing the deduped `globeData` points instead) has already been tried — it broke the globe visually and was reverted. Only touch this with the rendered globe open in front of you.
 
 ### Server actions
 
@@ -135,7 +146,7 @@ Single action: `sendEmail` in `src/utils/actions/actions.tsx` (`"use server"`). 
 ### Data sources
 
 - `src/constants/index.tsx` — `navlinks`, `education`, `experience`, `skills` (skills import icon components from `public/icon-static/*.tsx`).
-- `src/data/projects.json`, `src/data/socials.json` — static content; edit JSON to update the projects grid or social links.
+- `src/data/projects.json`, `src/data/socials.json` — static content; edit JSON to update the projects grid or social links. Remember `socials.json` also feeds JSON-LD `sameAs` (see SEO layer).
 
 ### `public/icon-static/`
 
