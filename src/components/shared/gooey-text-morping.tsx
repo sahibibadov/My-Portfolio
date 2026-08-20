@@ -121,7 +121,16 @@ const SvgFilters: React.FC = () => (
 );
 
 const MorphingText: React.FC<MorphingTextProps> = ({ texts, className }) => (
-  <div className={cn("text-center font-sans font-medium leading-none [filter:url(#threshold)_blur(0.6px)]", className)}>
+  // `relative` is load-bearing: both <span>s are absolutely positioned, and the
+  // CSS filter below is the only other thing that would establish a containing
+  // block for them. iOS WebKit drops `filter: url(...)`, so without `relative`
+  // the spans escape to the nearest positioned ancestor and overlap the heading.
+  <div
+    className={cn(
+      "relative text-center font-sans font-medium leading-none [filter:url(#threshold)_blur(0.6px)]",
+      className,
+    )}
+  >
     <Texts texts={texts} />
     <SvgFilters />
   </div>
